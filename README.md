@@ -31,24 +31,25 @@ Plugin for [Paper](https://papermc.io/software/paper/) 1.21.11 som legger til sp
 | `op_støvler` | Operator Støvler – med Feather Falling, Depth Strider |
 | `op_rustning_sett` | Gir hele rustningsettet (helm, bryst, bukse, støvler) |
 
-## Bygging
+## Nedlasting
+
+Ferdig bygget plugin (Paper 1.21.11):
+
+- **[Lager-1.0.0.jar](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server/raw/main/build/libs/Lager-1.0.0.jar)** – last ned og legg i serverens `plugins/`-mappe.
+
+## Bygging (valgfritt)
 
 Krever **Java 21** og **Gradle**.
 
-1. Installer [Gradle](https://gradle.org/install/) hvis du ikke har det.
-2. Generer wrapper (første gang):
-   ```bash
-   gradle wrapper
-   ```
-3. Bygg plugin-JAR:
+1. Klon repoet og bygg:
    ```bash
    .\gradlew jar
    ```
-4. JAR-filen ligger i `build/libs/Lager-1.0.0.jar`. Kopier den til serverens `plugins`-mappe og start serveren på nytt.
+2. JAR-filen ligger i `build/libs/Lager-1.0.0.jar`.
 
 ## Installasjon på server
 
-1. Bygg JAR (se over) eller last ned ferdig bygget JAR.
+1. Last ned [Lager-1.0.0.jar](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server/raw/main/build/libs/Lager-1.0.0.jar) (eller bygg selv, se over).
 2. Legg `Lager-1.0.0.jar` i `plugins`-mappen på Paper-serveren.
 3. Start eller restart serveren.
 4. Bruk `/lager` som OP for å se og gi OP-items.

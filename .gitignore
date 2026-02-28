@@ -1,5 +1,7 @@
-# Build
+# Build (unntatt ferdig JAR for nedlasting)
 build/
+!build/libs/
+!build/libs/*.jar
 out/
 bin/
 
