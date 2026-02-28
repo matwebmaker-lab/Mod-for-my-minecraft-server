@@ -1,0 +1,25 @@
+# Build
+build/
+out/
+bin/
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Server run (nedlastet Paper, verden, plugins-kopi)
+run/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
