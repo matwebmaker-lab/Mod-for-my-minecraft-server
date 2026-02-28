@@ -1,5 +1,8 @@
+# Kildekode (src/, build.gradle.kts, etc.) skal være i git – ikke listet her.
+
 # Build (unntatt ferdig JAR for nedlasting)
-build/
+# Ignorer alt i build/, men inkluder JAR i build/libs/
+build/*
 !build/libs/
 !build/libs/*.jar
 out/

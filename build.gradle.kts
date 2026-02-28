@@ -31,6 +31,7 @@ tasks.processResources {
 }
 
 tasks.jar {
+    archiveBaseName.set("potato")
     manifest {
         attributes["paperweight-mappings-namespace"] = "mojang"
     }
