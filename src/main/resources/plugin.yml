@@ -1,0 +1,24 @@
+name: Lager
+version: '${version}'
+main: no.lager.lager.LagerPlugin
+api-version: '1.21.1'
+description: OP-only spesielle våpen og rustninger - bare operatorer kan se og bruke dem.
+author: Lager
+
+commands:
+  lager:
+    description: Åpner meny med OP-spesielle våpen og rustninger (kun for operatorer).
+    usage: /<command> [list|give <id>]
+    permission: lager.use
+  lagerkiste:
+    description: Åpner admin-kisten med mange OP-items (kun Admin_owner).
+    usage: /<command>
+    permission: lager.adminchest
+
+permissions:
+  lager.use:
+    description: Tillater bruk av /lager (OP-items).
+    default: op
+  lager.adminchest:
+    description: Tillater åpning av admin-kisten (kun for Admin_owner).
+    default: op

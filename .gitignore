@@ -1,0 +1,23 @@
+# Build (unntatt ferdig JAR for nedlasting)
+build/
+!build/libs/
+!build/libs/*.jar
+out/
+bin/
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Server run
+run/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
