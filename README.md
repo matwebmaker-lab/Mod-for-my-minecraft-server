@@ -1,31 +1,34 @@
-# OP Gear Minecraft Paper Server Mod – kildekode
+# OP Gear – Minecraft Paper Plugin
 
-Kildekode for **OP Gear**-pluginen (Paper 1.21.11). Ferdig JAR lastes ned fra [Mod-for-my-minecraft-server](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server).
+Source code for the **OP Gear** plugin (Paper 1.21.11). A pre-built JAR is also available from [Mod-for-my-minecraft-server](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server).
 
-## Bygging
+## Requirements
 
-Krever **Java 21** og **Gradle**.
+- **Java 21**
+- **Gradle** (or use the included wrapper)
+
+## Building
 
 ```bash
 .\gradlew jar
 ```
 
-JAR: `build/libs/potato-1.0.0.jar` (versjon fra `build.gradle.kts`)
+Output: `build/libs/potato-<version>.jar` (version is set in `build.gradle.kts`).
 
-## Kjøre server lokalt
+## Running the server locally
 
 ```bash
-.\gradlew setupServer   # første gang (laster ned Paper)
-.\gradlew runServer     # starter server med pluginen
+.\gradlew setupServer   # first time only (downloads Paper)
+.\gradlew runServer     # starts the server with the plugin
 ```
 
-## Prosjektstruktur
+## Project structure
 
-- `src/main/java/` – Java-kildekode
-- `src/main/resources/plugin.yml` – plugin-metadata
-- `build.gradle.kts` – byggoppsett
+- `src/main/java/` – Java source
+- `src/main/resources/plugin.yml` – plugin metadata
+- `build.gradle.kts` – build configuration
 
-## Krav
+## Compatibility
 
 - Paper 1.21.11 (Minecraft 1.21.11)
 - Java 21
