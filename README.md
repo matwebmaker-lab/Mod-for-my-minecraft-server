@@ -76,3 +76,20 @@ Krever **Java 21** og **Gradle**.
 ## Tillatelser
 
 - `lager.use` – bruk av `/lager` (standard: `op`, dvs. kun operatorer).
+- `lager.adminchest` – åpne admin-kisten med `/lagerkiste` (kun Admin_owner).
+
+## Publisere på GitHub
+
+1. Opprett et **nytt repository** på [GitHub](https://github.com/new) (f.eks. `Lager` eller `lager-paper-plugin`).  
+   Velg **ikke** «Add a README» – prosjektet har allerede filer.
+
+2. Koble det lokale prosjektet til GitHub og push (bytt ut `DITT_BRUKERNAVN` og `REPO-NAVN`):
+
+   ```bash
+   cd "d:\Projects\Lager mod til paper server"
+   git remote add origin https://github.com/DITT_BRUKERNAVN/REPO-NAVN.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+   Hvis du bruker SSH: `git@github.com:DITT_BRUKERNAVN/REPO-NAVN.git`
