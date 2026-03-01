@@ -249,14 +249,14 @@ public final class OpItemRegistry {
                     null);
 
             case "flygkølle" -> createOpItem(id, Material.BLAZE_ROD,
-                    Component.text("Flygkølle").color(NamedTextColor.AQUA).decoration(TextDecoration.ITALIC, false),
-                    lore("Høyreklikk: send entities flygende i retningen du peker."),
+                    Component.text("Flygestav").color(NamedTextColor.AQUA).decoration(TextDecoration.ITALIC, false),
+                    lore("Hold høyreklikk for å ta entity med deg.", "Slipp (shift) for å slippe."),
                     null,
                     new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
 
             case "instillinger" -> createOpItem(id, Material.CLOCK,
-                    Component.text("Lager-innstillinger").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
-                    lore("Hold i hånden og trykk shift for å åpne.", "Styr armor-reach (rekkevidde)."),
+                    Component.text("Matheo client").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
+                    lore("Høyre shift for å åpne.", "Styr armor-reach (rekkevidde)."),
                     null,
                     new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
 
@@ -310,8 +310,8 @@ public final class OpItemRegistry {
                 Map.entry("op_elytra", "Operator Elytra"),
                 Map.entry("op_totem", "Operator Totem"),
                 Map.entry("op_gulleneple", "Operator Gulleneple"),
-                Map.entry("flygkølle", "Flygkølle (send entities flyende)"),
-                Map.entry("instillinger", "Lager-innstillinger (shift for å åpne)"),
+                Map.entry("flygkølle", "Flygestav (ta entity med deg, shift for å slippe)"),
+                Map.entry("instillinger", "Matheo client (høyre shift for å åpne)"),
                 Map.entry("totem_stakk", "Totem-stakk (høyreklikk = 1 totem)")
         );
     }

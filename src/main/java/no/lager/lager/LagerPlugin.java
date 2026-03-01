@@ -27,7 +27,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class LagerPlugin extends JavaPlugin {
 
-    private static final int ARMOR_REACH_MIN = 3;
+    private static final int ARMOR_REACH_MIN = 0;  // 0 = vanlig (ingen ekstra reach)
     private static final int ARMOR_REACH_MAX = 20;
     private static final String CONFIG_ARMOR_REACH = "armor_reach";
 
@@ -48,7 +48,7 @@ public final class LagerPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new LagerSettingsListener(this), this);
     }
 
-    /** Hent armor-reach fra config (antall blokker, 3–20). */
+    /** Hent armor-reach fra config (0 = vanlig, 3–20 = antall blokker). */
     public int getArmorReach() {
         return Math.max(ARMOR_REACH_MIN, Math.min(ARMOR_REACH_MAX, getConfig().getInt(CONFIG_ARMOR_REACH, 10)));
     }
@@ -67,11 +67,12 @@ public final class LagerPlugin extends JavaPlugin {
     public void openSettingsGui(Player player) {
         if (!player.isOp()) return;
         LagerSettingsHolder holder = new LagerSettingsHolder();
-        Inventory inv = Bukkit.createInventory(holder, 27, Component.text("Lager – Armor reach").color(NamedTextColor.GOLD).decoration(TextDecoration.BOLD, true));
+        Inventory inv = Bukkit.createInventory(holder, 27, Component.text("Matheo client").color(NamedTextColor.GOLD).decoration(TextDecoration.BOLD, true));
         holder.setInventory(inv);
         int reach = getArmorReach();
         inv.setItem(4, makeInfoItem(reach));
         inv.setItem(11, makeButtonItem("minus", Material.RED_WOOL, Component.text("-1 (mindre reach)").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, true)));
+        inv.setItem(13, makeButtonItem("vanlig", Material.GRAY_WOOL, Component.text("Vanlig (ingen ekstra reach)").color(NamedTextColor.GRAY).decoration(TextDecoration.BOLD, true)));
         inv.setItem(15, makeButtonItem("plus", Material.LIME_WOOL, Component.text("+1 (større reach)").color(NamedTextColor.GREEN).decoration(TextDecoration.BOLD, true)));
         player.openInventory(inv);
     }
@@ -80,7 +81,8 @@ public final class LagerPlugin extends JavaPlugin {
         ItemStack stack = new ItemStack(Material.OAK_SIGN);
         ItemMeta meta = stack.getItemMeta();
         if (meta != null) {
-            meta.displayName(Component.text("Nåværende reach: " + reach + " blokker").color(NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false));
+            String title = reach == 0 ? "Vanlig (ingen ekstra reach)" : "Nåværende reach: " + reach + " blokker";
+            meta.displayName(Component.text(title).color(NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false));
             meta.lore(java.util.List.of(
                     Component.text("OP-brystplade gir denne").color(NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false),
                     Component.text("rekkevidden for blokk og entity.").color(NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false)

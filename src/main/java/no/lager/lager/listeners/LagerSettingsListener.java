@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 /**
- * Åpner Lager-innstillingsskjermen når OP holder instillinger-item og trykker shift.
+ * Åpner Matheo client (innstillinger) når OP holder Matheo client-item og trykker høyre shift.
  * Håndterer +/- for armor-reach i skjermen.
  */
 public final class LagerSettingsListener implements Listener {
@@ -53,10 +53,14 @@ public final class LagerSettingsListener implements Listener {
         int reach = plugin.getArmorReach();
         if ("minus".equals(btn)) {
             plugin.setArmorReach(reach - 1);
-            player.sendMessage(net.kyori.adventure.text.Component.text("Armor reach satt til " + plugin.getArmorReach() + " blokker.").color(net.kyori.adventure.text.format.NamedTextColor.GREEN));
+            int now = plugin.getArmorReach();
+            player.sendMessage(net.kyori.adventure.text.Component.text(now == 0 ? "Reach satt til vanlig." : "Armor reach satt til " + now + " blokker.").color(net.kyori.adventure.text.format.NamedTextColor.GREEN));
         } else if ("plus".equals(btn)) {
             plugin.setArmorReach(reach + 1);
             player.sendMessage(net.kyori.adventure.text.Component.text("Armor reach satt til " + plugin.getArmorReach() + " blokker.").color(net.kyori.adventure.text.format.NamedTextColor.GREEN));
+        } else if ("vanlig".equals(btn)) {
+            plugin.setArmorReach(0);
+            player.sendMessage(net.kyori.adventure.text.Component.text("Reach satt til vanlig (ingen ekstra reach).").color(net.kyori.adventure.text.format.NamedTextColor.GREEN));
         }
         plugin.openSettingsGui(player);
     }

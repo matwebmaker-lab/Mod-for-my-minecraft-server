@@ -85,11 +85,11 @@ public final class OpArmorEffectsListener implements Listener {
             }
         }
 
-        // Brystplade: reach fra config (armor_reach blokker)
+        // Brystplade: reach fra config (0 = vanlig, ellers antall blokker)
         int configReach = plugin.getConfig().getInt("armor_reach", 10);
-        configReach = Math.max(3, Math.min(20, configReach));
-        double blockReachAdd = configReach - DEFAULT_BLOCK_REACH;
-        double entityReachAdd = configReach - DEFAULT_ENTITY_REACH;
+        configReach = Math.max(0, Math.min(20, configReach));
+        double blockReachAdd = configReach <= 0 ? 0 : configReach - DEFAULT_BLOCK_REACH;
+        double entityReachAdd = configReach <= 0 ? 0 : configReach - DEFAULT_ENTITY_REACH;
         AttributeInstance blockReach = player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE);
         if (blockReach != null) {
             removeModifierByKey(blockReach, keyBlockReach);
