@@ -1,6 +1,10 @@
-# OP Gear – Minecraft Paper Plugin
+# OP Gear – Minecraft Paper Plugin (versjon 3)
 
-Source code for the **OP Gear** plugin (Paper 1.21.11). A pre-built JAR is also available from [Mod-for-my-minecraft-server](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server).
+**Kildekode og bygg** for **Lager**-pluginen (OP Gear) for Paper 1.21.11.
+
+- **Versjon:** 3.0.0  
+- **GitHub-repo:** [matwebmaker-lab/Mod-for-my-minecraft-server](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server)  
+- Ferdigbygd JAR kan lastes ned fra [Releases](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server/releases) på GitHub (når publisert).
 
 ## Requirements
 
@@ -23,9 +27,9 @@ Output: `build/libs/potato-<version>.jar` (version is set in `build.gradle.kts`)
    ```
 2. Copy the JAR to the server’s `plugins/` folder. Use a **binary** transfer so the file isn’t corrupted:
    - **SCP (Linux/macOS or WSL):**  
-     `scp build/libs/potato-1.0.0.jar user@yourserver:~/minecraft/plugins/`
+     `scp build/libs/potato-3.0.0.jar user@yourserver:~/minecraft/plugins/`
    - **WinSCP / SFTP:** transfer in “binary” mode (default for .jar).
-   - **Other:** copy `build/libs/potato-1.0.0.jar` as-is; do not paste contents or use a text transfer.
+   - **Other:** copy `build/libs/potato-3.0.0.jar` as-is; do not paste contents or use a text transfer.
 
 If the server logs **`zip END header not found`** for the plugin, the JAR was corrupted during copy. Re-copy the file as binary and try again.
 
