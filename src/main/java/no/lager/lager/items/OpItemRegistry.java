@@ -270,6 +270,149 @@ public final class OpItemRegistry {
                 yield stakk;
             }
 
+            // —— NYE VÅPEN ——
+            case "dommersverd" -> createOpItem(id, Material.NETHERITE_SWORD,
+                    Component.text("Dommens Sverd").color(NamedTextColor.DARK_RED).decoration(TextDecoration.ITALIC, false),
+                    lore("Dreper spillere under 5 hjerter umiddelbart."),
+                    Map.of(Enchantment.SHARPNESS, 8, Enchantment.UNBREAKING, 5, Enchantment.MENDING, 1),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE});
+
+            case "vakuumbue" -> createOpItem(id, Material.BOW,
+                    Component.text("Vakuumbue").color(NamedTextColor.DARK_AQUA).decoration(TextDecoration.ITALIC, false),
+                    lore("Trekker entity mot pila der den lander."),
+                    Map.of(Enchantment.POWER, 5, Enchantment.INFINITY, 1, Enchantment.UNBREAKING, 5),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "kaosstav" -> createOpItem(id, Material.BLAZE_ROD,
+                    Component.text("Kaosstav").color(NamedTextColor.LIGHT_PURPLE).decoration(TextDecoration.ITALIC, false),
+                    lore("Høyreklikk = tilfeldig effekt (Strength, Levitation, Wither, Speed, etc.)."),
+                    null,
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "gravitasjonsøks" -> createOpItem(id, Material.NETHERITE_AXE,
+                    Component.text("Gravitasjonsøks").color(NamedTextColor.AQUA).decoration(TextDecoration.ITALIC, false),
+                    lore("Slår mobs opp i lufta."),
+                    Map.of(Enchantment.SHARPNESS, 6, Enchantment.UNBREAKING, 5),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "blodtrident" -> createOpItem(id, Material.TRIDENT,
+                    Component.text("Blodets Trident").color(NamedTextColor.DARK_RED).decoration(TextDecoration.ITALIC, false),
+                    lore("Gir deg liv tilbake basert på damage."),
+                    Map.of(Enchantment.IMPALING, 5, Enchantment.LOYALTY, 3, Enchantment.UNBREAKING, 5),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "tidsknuser" -> createOpItem(id, Material.NETHERITE_SWORD,
+                    Component.text("Tidsknuser").color(NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false),
+                    lore("Treffer = Slowness 10 i 3 sek."),
+                    Map.of(Enchantment.SHARPNESS, 5, Enchantment.UNBREAKING, 5),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            // —— NY RUSTNING ——
+            case "op_kappe" -> createOpItem(id, Material.ELYTRA,
+                    Component.text("Operator Kappe").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
+                    lore("Immun mot fall damage."),
+                    Map.of(Enchantment.UNBREAKING, 5, Enchantment.MENDING, 1),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "void_helm" -> createOpItem(id, Material.NETHERITE_HELMET,
+                    Component.text("Void Hjelm").color(NamedTextColor.DARK_PURPLE).decoration(TextDecoration.ITALIC, false),
+                    lore("Night Vision + ser spillere gjennom vegger (glow)."),
+                    Map.of(Enchantment.PROTECTION, 5, Enchantment.UNBREAKING, 5),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "titan_bryst" -> createOpItem(id, Material.NETHERITE_CHESTPLATE,
+                    Component.text("Titan Brystplate").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
+                    lore("50% mindre damage."),
+                    Map.of(Enchantment.PROTECTION, 8, Enchantment.UNBREAKING, 5),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "magnet_bukse" -> createOpItem(id, Material.NETHERITE_LEGGINGS,
+                    Component.text("Magnetbukse").color(NamedTextColor.AQUA).decoration(TextDecoration.ITALIC, false),
+                    lore("Trekker drops automatisk til deg."),
+                    Map.of(Enchantment.PROTECTION, 5, Enchantment.UNBREAKING, 5),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "frost_støvler" -> createOpItem(id, Material.NETHERITE_BOOTS,
+                    Component.text("Froststøvler").color(NamedTextColor.AQUA).decoration(TextDecoration.ITALIC, false),
+                    lore("Fryser vann når du går (Frost Walker + permanent)."),
+                    Map.of(Enchantment.FROST_WALKER, 2, Enchantment.PROTECTION, 5, Enchantment.UNBREAKING, 5),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            // —— SPESIALITEMS ——
+            case "admin_stav" -> createOpItem(id, Material.STICK,
+                    Component.text("Adminstav").color(NamedTextColor.RED).decoration(TextDecoration.ITALIC, false),
+                    lore("Høyreklikk spiller = GUI med kick/frys/heal/clear inv."),
+                    null,
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "rewind_klokke" -> createOpItem(id, Material.CLOCK,
+                    Component.text("Tidsklokke").color(NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false),
+                    lore("Shift + høyreklikk = går 5 sek tilbake (posisjon + HP)."),
+                    null,
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "void_perle" -> createOpItem(id, Material.ENDER_PEARL,
+                    Component.text("Voidperle").color(NamedTextColor.DARK_PURPLE).decoration(TextDecoration.ITALIC, false),
+                    lore("Teleporterer spilleren du treffer til Y = -64."),
+                    null,
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "massehealer" -> createOpItem(id, Material.GOLDEN_APPLE,
+                    Component.text("Massehealer").color(NamedTextColor.GREEN).decoration(TextDecoration.ITALIC, false),
+                    lore("Høyreklikk = healer alle innen 10 blokker."),
+                    null,
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "verdensbryter" -> createOpItem(id, Material.NETHERITE_PICKAXE,
+                    Component.text("Verdensbryter").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
+                    lore("3x3 eller 5x5 mining."),
+                    Map.of(Enchantment.EFFICIENCY, 10, Enchantment.UNBREAKING, 5),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            // —— ADMIN / TROLL ——
+            case "fakeban" -> createOpItem(id, Material.BOOK,
+                    Component.text("Fake Ban-bok").color(NamedTextColor.RED).decoration(TextDecoration.ITALIC, false),
+                    lore("Viser falsk 'You are banned' i 5 sek."),
+                    null,
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "torden_regn" -> createOpItem(id, Material.BLAZE_ROD,
+                    Component.text("Tordenværstav").color(NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false),
+                    lore("Starter lynstorm."),
+                    null,
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "frysbombe" -> createOpItem(id, Material.SNOWBALL,
+                    Component.text("Frysbombe").color(NamedTextColor.AQUA).decoration(TextDecoration.ITALIC, false),
+                    lore("Fryser alle spillere i radius."),
+                    null,
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "inverter" -> createOpItem(id, Material.STICK,
+                    Component.text("Inverterstav").color(NamedTextColor.DARK_GRAY).decoration(TextDecoration.ITALIC, false),
+                    lore("Bytter WASD-kontroller i 10 sek."),
+                    null,
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "størrelse_orb" -> createOpItem(id, Material.ENDER_PEARL,
+                    Component.text("Size Orb").color(NamedTextColor.LIGHT_PURPLE).decoration(TextDecoration.ITALIC, false),
+                    lore("Gjør spiller liten eller gigantisk."),
+                    null,
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            // —— MYTHIC ——
+            case "void_kongekrone" -> createOpItem(id, Material.NETHERITE_HELMET,
+                    Component.text("Void Kongekrone").color(NamedTextColor.LIGHT_PURPLE).decoration(TextDecoration.ITALIC, false),
+                    lore("Creative flight + Resistance III."),
+                    Map.of(Enchantment.PROTECTION, 5, Enchantment.UNBREAKING, 5),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "dommedagsknapp" -> createOpItem(id, Material.NETHERITE_SCRAP,
+                    Component.text("Dommedagsknapp").color(NamedTextColor.DARK_RED).decoration(TextDecoration.ITALIC, false),
+                    lore("Sletter alle mobs i verden."),
+                    null,
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
             default -> null;
         };
     }
@@ -277,16 +420,18 @@ public final class OpItemRegistry {
     /** Alle item-ids som skal fylle admin-kisten (inkl. duplikater for mange slots). */
     public List<String> getChestFillIds() {
         return List.of(
-                "storm_sverd", "storm_sverd", "dødspiler", "dødspiler", "tordenøks", "krossbue", "trident", "flygkølle",
+                "storm_sverd", "storm_sverd", "dommersverd", "vakuumbue", "tordenøks", "gravitasjonsøks", "blodtrident", "tidsknuser", "kaosstav",
                 "op_helm", "op_bryst", "op_bukser", "op_støvler",
-                "op_helm", "op_bryst", "op_bukser", "op_støvler",
-                "op_spade", "op_pickaxe", "op_spade", "op_pickaxe",
+                "op_kappe", "void_helm", "titan_bryst", "magnet_bukse", "frost_støvler",
+                "op_spade", "op_pickaxe", "verdensbryter", "flygkølle",
                 "op_skjold", "op_elytra", "op_totem", "op_gulleneple", "fly_støvler", "instillinger", "totem_stakk", "totem_stakk",
-                "op_totem", "op_gulleneple", "op_gulleneple", "op_gulleneple",
+                "admin_stav", "rewind_klokke", "void_perle", "massehealer",
+                "fakeban", "torden_regn", "frysbombe", "inverter", "størrelse_orb",
                 "storm_sverd", "dødspiler", "tordenøks", "krossbue", "trident",
                 "op_helm", "op_bryst", "op_bukser", "op_støvler",
                 "op_spade", "op_pickaxe", "op_skjold", "op_elytra",
-                "op_totem", "op_gulleneple", "storm_sverd", "dødspiler",
+                "void_kongekrone", "dommedagsknapp",
+                "op_totem", "op_gulleneple", "storm_sverd", "dommersverd", "vakuumbue",
                 "tordenøks", "krossbue", "trident", "op_helm", "op_bryst", "op_bukser", "op_støvler"
         );
     }
@@ -294,6 +439,12 @@ public final class OpItemRegistry {
     public Map<String, String> getAllItems() {
         return Map.ofEntries(
                 Map.entry("storm_sverd", "Storm Sverd (Netherite sverd)"),
+                Map.entry("dommersverd", "Dommens Sverd (dreper under 5 hjerter)"),
+                Map.entry("vakuumbue", "Vakuumbue (trekker entity mot pil)"),
+                Map.entry("kaosstav", "Kaosstav (tilfeldig effekt)"),
+                Map.entry("gravitasjonsøks", "Gravitasjonsøks (slår mobs opp)"),
+                Map.entry("blodtrident", "Blodets Trident (liv tilbake)"),
+                Map.entry("tidsknuser", "Tidsknuser (Slowness 10)"),
                 Map.entry("dødspiler", "Dødspiler (Kraftig bue)"),
                 Map.entry("tordenøks", "Tordenøks (Netherite øks)"),
                 Map.entry("krossbue", "Mester-krossbue"),
@@ -302,17 +453,34 @@ public final class OpItemRegistry {
                 Map.entry("op_bryst", "Operator Brystplade"),
                 Map.entry("op_bukser", "Operator Bukse"),
                 Map.entry("op_støvler", "Operator Støvler"),
+                Map.entry("op_kappe", "Operator Kappe (immun fall damage)"),
+                Map.entry("void_helm", "Void Hjelm (Night Vision + glow)"),
+                Map.entry("titan_bryst", "Titan Brystplate (50% mindre damage)"),
+                Map.entry("magnet_bukse", "Magnetbukse (trekker drops)"),
+                Map.entry("frost_støvler", "Froststøvler (fryser vann)"),
                 Map.entry("fly_støvler", "Flygestøvler (fly som creative)"),
                 Map.entry("op_rustning_sett", "Hele OP-rustningsett (helm, bryst, bukse, støvler)"),
                 Map.entry("op_spade", "Operator Spade"),
                 Map.entry("op_pickaxe", "Operator Hakke"),
+                Map.entry("verdensbryter", "Verdensbryter (3x3/5x5 mining)"),
                 Map.entry("op_skjold", "Operator Skjold"),
                 Map.entry("op_elytra", "Operator Elytra"),
                 Map.entry("op_totem", "Operator Totem"),
                 Map.entry("op_gulleneple", "Operator Gulleneple"),
                 Map.entry("flygkølle", "Flygestav (ta entity med deg, shift for å slippe)"),
+                Map.entry("admin_stav", "Adminstav (kick/frys/heal GUI)"),
+                Map.entry("rewind_klokke", "Tidsklokke (5 sek tilbake)"),
+                Map.entry("void_perle", "Voidperle (teleporter til Y=-64)"),
+                Map.entry("massehealer", "Massehealer (heal 10 blokker)"),
                 Map.entry("instillinger", "Matheo client (høyre shift for å åpne)"),
-                Map.entry("totem_stakk", "Totem-stakk (høyreklikk = 1 totem)")
+                Map.entry("totem_stakk", "Totem-stakk (høyreklikk = 1 totem)"),
+                Map.entry("fakeban", "Fake Ban-bok"),
+                Map.entry("torden_regn", "Tordenværstav (lynstorm)"),
+                Map.entry("frysbombe", "Frysbombe"),
+                Map.entry("inverter", "Inverterstav (bytter WASD)"),
+                Map.entry("størrelse_orb", "Size Orb (liten/gigantisk)"),
+                Map.entry("void_kongekrone", "Void Kongekrone (Mythic)"),
+                Map.entry("dommedagsknapp", "Dommedagsknapp (sletter alle mobs)")
         );
     }
 }

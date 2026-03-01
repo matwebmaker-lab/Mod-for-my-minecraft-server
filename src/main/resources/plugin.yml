@@ -22,6 +22,26 @@ commands:
     description: "Admin_owner kan slå frys på/av (fryser spillere og entities rundt deg)."
     usage: /<command>
     permission: lager.frys
+  opmode:
+    description: Gir midlertidig OP-powers.
+    usage: /<command> [sekunder]
+    permission: lager.opmode
+  troll:
+    description: Random troll-effekt på spiller.
+    usage: /<command> <spiller>
+    permission: lager.troll
+  boost:
+    description: Gir midlertidig OP-kit.
+    usage: /<command> [spiller]
+    permission: lager.boost
+  arena:
+    description: Teleporterer til PvP-arena.
+    usage: /<command>
+    permission: lager.arena
+  spectateplus:
+    description: Spectate uten at spiller vet.
+    usage: /<command> <spiller>
+    permission: lager.spectateplus
 
 permissions:
   lager.use:
@@ -35,4 +55,19 @@ permissions:
     default: op
   lager.frys:
     description: "Tillater /frys, kun Admin_owner i praksis."
+    default: op
+  lager.opmode:
+    description: Tillater /opmode.
+    default: op
+  lager.troll:
+    description: Tillater /troll.
+    default: op
+  lager.boost:
+    description: Tillater /boost.
+    default: op
+  lager.arena:
+    description: Tillater /arena.
+    default: op
+  lager.spectateplus:
+    description: Tillater /spectateplus.
     default: op

@@ -2,9 +2,33 @@
 
 **Kildekode og bygg** for **Lager**-pluginen (OP Gear) for Paper 1.21.11.
 
-- **Versjon:** 4.0.5  
+- **Versjon:** 4.0.6  
 - **GitHub-repo:** [matwebmaker-lab/Mod-for-my-minecraft-server](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server)  
-- Ferdigbygd JAR kan lastes ned fra [Releases](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server/releases) på GitHub (når publisert).
+- Ferdigbygd JAR: `build/libs/potato-4.0.6.jar` (eller nyere ved `.\gradlew jar`).
+
+---
+
+## Alle kommandoer (komplett liste)
+
+| Kommando | Bruk | Beskrivelse |
+|----------|------|--------------|
+| `/lager` | `/lager` | Vis liste over alle OP-items |
+| `/lager list` | `/lager list` | Samme som `/lager` |
+| `/lager give <id>` | f.eks. `/lager give storm_sverd` | Gi deg ett OP-item (alle id'er står under OP-items) |
+| `/lager gear` | `/lager gear` | Gi hele OP-utstyret (rustning + våpen) |
+| `/lager instillinger` | `/lager instillinger` | Åpne Matheo client (armor reach, full bright) |
+| `/lagerkiste` | `/lagerkiste` | Åpne admin-kisten (kun **Admin_owner**) |
+| `/kiste` | `/kiste` | Åpne OP-kisten (uendelig gear, sider med Neste/Forrige) |
+| `/frys` | `/frys` | Slå frys på/av (kun **Admin_owner**; også med bytte-hender-tasten) |
+| `/opmode` | `/opmode` eller `/opmode 120` | Midlertidig OP (creative, speed, night vision); valgfri sekunder |
+| `/troll` | `/troll <spillernavn>` | Random troll-effekt på spiller |
+| `/boost` | `/boost` eller `/boost <spiller>` | Strength + speed + regen i 30 sek |
+| `/arena` | `/arena` | Teleporterer til PvP-arena |
+| `/spectateplus` | `/spectateplus <spillernavn>` | Spectate – teleporterer til spiller og setter spectator |
+
+**Tilgang:** Alle kommandoer krever OP (eller tilsvarende permission). `/lagerkiste` og `/frys` er i praksis for **Admin_owner**.
+
+---
 
 ## Nyheter (oversikt)
 
@@ -20,6 +44,35 @@
 - **Tordenøks på villager:** Høyreklikk på villager som OP gir belønning (emeralds, diamant, gulleneple, totem).
 - **Havets Vrede (trident):** Lyn slår ned der tridenten treffer.
 - **Admin_owner frys:** `/frys` eller **bytte-hender**-tasten (f.eks. R) – fryser spillere og entities i 15 blokker radius; kun Admin_owner kan bevege seg.
+- **Nye våpen:** Dommens Sverd, Vakuumbue, Kaosstav, Gravitasjonsøks, Blodtrident, Tidsknuser.
+- **Ny rustning:** Operator Kappe (immun fall), Void Hjelm (Night Vision + glow), Titan Brystplate (50 % mindre skade), Magnetbukse (trekker drops), Froststøvler (fryser vann).
+- **Spesialitems:** Adminstav (GUI kick/frys/heal/clear), Tidsklokke (5 sek rewind), Voidperle (teleporter til Y=-64), Massehealer (heal 10 blokker), Verdensbryter (3x3/5x5 mining).
+- **Admin/Troll:** Fake Ban-bok, Tordenværstav, Frysbombe, Inverterstav (WASD byttes), Size Orb (liten/gigant).
+- **Mythic:** Void Kongekrone (creative flight + resist), Dommedagsknapp (sletter alle mobs).
+- **Nye kommandoer:** `/opmode`, `/troll <spiller>`, `/boost`, `/arena`, `/spectateplus <spiller>`.
+
+---
+
+## Gamle ting vs. nye ting (for git / release)
+
+**Opprinnelige / gamle ting (før 4.0.6):**
+- `/lager`, `/lager give`, `/lager gear`, `/lager list`, `/lager instillinger`
+- `/lagerkiste` (Admin_owner), `/kiste` (OP-kiste med sider)
+- `/frys` (Admin_owner) + bytte-hender-tasten
+- Våpen: Storm Sverd, Dødspiler, Tordenøks, Krossbue, Havets Vrede (trident)
+- Rustning: OP hjelm/bryst/bukse/støvler, Flygestøvler
+- Verktøy: OP spade, hakke, skjold, elytra, totem, gulleneple
+- Spesial: Flygestav (flygkølle), Matheo client (instillinger), Totem-stakk
+- Tordenøks på villager → belønning; Havets Vrede → lyn; Admin_owner frys
+
+**Nye ting (4.0.6):**
+- **Kommandoer:** `/opmode`, `/troll <spiller>`, `/boost`, `/arena`, `/spectateplus <spiller>`
+- **Våpen:** Dommens Sverd, Vakuumbue, Kaosstav, Gravitasjonsøks, Blodtrident, Tidsknuser
+- **Rustning:** Operator Kappe, Void Hjelm, Titan Brystplate, Magnetbukse, Froststøvler, Void Kongekrone
+- **Spesial:** Adminstav (GUI), Tidsklokke (rewind), Voidperle, Massehealer, Verdensbryter
+- **Admin/Troll:** Fake Ban-bok, Tordenværstav, Frysbombe, Inverterstav, Size Orb, Dommedagsknapp
+
+---
 
 ## Matheo client (innstillinger)
 
@@ -28,20 +81,25 @@
 - **Armor reach:** +/- for rekkevidde når du har OP-brystplade. «Vanlig» = ingen ekstra reach.
 - **Full bright:** Slå på/av Night Vision (lys i mørke).
 
-## Kommandoer
+## Kommandoer (detaljert)
 
 | Kommando | Beskrivelse | Hvem |
 |----------|-------------|------|
 | `/lager` | Vis liste over alle OP-items | OP |
 | `/lager list` | Samme som `/lager` | OP |
-| `/lager give <id>` | Gi deg ett OP-item (f.eks. `storm_sverd`, `flygkølle`, `fly_støvler`) | OP |
+| `/lager give <id>` | Gi deg ett OP-item (f.eks. `storm_sverd`, `flygkølle`, `dommersverd`) | OP |
 | `/lager gear` | Gi deg hele OP-utstyret (rustning + våpen) | OP |
 | `/lager instillinger` | Åpne Matheo client (armor reach, full bright) | OP |
 | `/lagerkiste` | Åpne admin-kisten fylt med OP-items | Kun **Admin_owner** |
 | `/kiste` | Åpne OP-kisten (uendelig gear, refylles når du tar) | OP |
-| `/frys` | Slå frys på/av (fryser spillere og entities rundt deg; kun du kan bevege deg) | Kun **Admin_owner** |
+| `/frys` | Slå frys på/av (fryser spillere og entities rundt deg) | Kun **Admin_owner** |
+| `/opmode` [sek] | Midlertidig OP-powers (creative, speed, night vision) | OP |
+| `/troll <spiller>` | Random troll-effekt på spiller (levitation, poison, lyn, etc.) | OP |
+| `/boost` [spiller] | Midlertidig OP-kit (strength, speed, regen 30 sek) | OP |
+| `/arena` | Teleporterer til PvP-arena (koordinater i config) | OP |
+| `/spectateplus <spiller>` | Spectate-modus, teleporterer til spiller | OP |
 
-Admin_owner kan også bruke **bytte-hender**-tasten (f.eks. R hvis du binder den) for å slå frys på/av.
+Admin_owner kan også bruke **bytte-hender**-tasten (f.eks. R) for å slå frys på/av.
 
 ## OP-items (og innhold i kista)
 
@@ -52,8 +110,14 @@ Disse itemene kan gis med `/lager give <id>` og finnes i **OP-kisten** (`/kiste`
 | Id | Navn | Beskrivelse |
 |----|------|-------------|
 | `storm_sverd` | Storm Sverd | Netherite-sverd, høye enchantments |
+| `dommersverd` | Dommens Sverd | Dreper spillere under 5 hjerter umiddelbart |
+| `vakuumbue` | Vakuumbue | Trekker entity mot pila der den lander |
+| `kaosstav` | Kaosstav | Høyreklikk = tilfeldig effekt (Strength, Levitation, Wither, Speed, etc.) |
+| `gravitasjonsøks` | Gravitasjonsøks | Slår mobs opp i lufta |
+| `blodtrident` | Blodets Trident | Gir deg liv tilbake basert på damage |
+| `tidsknuser` | Tidsknuser | Treffer = Slowness 10 i 3 sek |
 | `dødspiler` | Dødspiler | Kraftig bue |
-| `tordenøks` | Tordenøks | Netherite-øks; høyreklikk på villager som OP gir belønning (emeralds, diamant, gulleneple, totem) |
+| `tordenøks` | Tordenøks | Netherite-øks; høyreklikk på villager som OP gir belønning |
 | `krossbue` | Mester-krossbue | Krossbue med høye enchantments |
 | `trident` | Havets Vrede | Trident; lyn slår ned der den treffer |
 
@@ -65,8 +129,14 @@ Disse itemene kan gis med `/lager give <id>` og finnes i **OP-kisten** (`/kiste`
 | `op_bryst` | Operator Brystplade | Ekstra reach (antall blokker styres i Matheo client) |
 | `op_bukser` | Operator Bukse | Styrke II + vanndråper |
 | `op_støvler` | Operator Støvler | Speed II |
+| `op_kappe` | Operator Kappe | Immun mot fall damage |
+| `void_helm` | Void Hjelm | Night Vision + ser spillere gjennom vegger (glow innen 64 blokker) |
+| `titan_bryst` | Titan Brystplate | 50 % mindre damage |
+| `magnet_bukse` | Magnetbukse | Trekker drops automatisk til deg |
+| `frost_støvler` | Froststøvler | Fryser vann når du går (Frost Walker + permanent) |
 | `op_rustning_sett` | (spesial) | Gir hele settet med `/lager give op_rustning_sett` |
-| `fly_støvler` | Flygestøvler | Jernstøvler – fly som i creative (dobbeltklikk hopp) |
+| `fly_støvler` | Flygestøvler | Jernstøvler – fly som i creative |
+| `void_kongekrone` | Void Kongekrone (Mythic) | Creative flight + Resistance III |
 
 ### Verktøy og annet
 
@@ -74,6 +144,7 @@ Disse itemene kan gis med `/lager give <id>` og finnes i **OP-kisten** (`/kiste`
 |----|------|-------------|
 | `op_spade` | Operator Spade | Netherite-spade, høye enchantments |
 | `op_pickaxe` | Operator Hakke | Netherite-hakke, høye enchantments |
+| `verdensbryter` | Verdensbryter | 3x3 eller 5x5 mining (sneak for 5x5) |
 | `op_skjold` | Operator Skjold | Skjold med Unbreaking |
 | `op_elytra` | Operator Elytra | Elytra med Unbreaking/Mending |
 | `op_totem` | Operator Totem | Totem of Undying |
@@ -84,8 +155,23 @@ Disse itemene kan gis med `/lager give <id>` og finnes i **OP-kisten** (`/kiste`
 | Id | Navn | Bruk |
 |----|------|------|
 | `flygkølle` | Flygestav | Høyreklikk = ta entity med deg, shift = slippe. På villager åpnes ikke trade. |
+| `admin_stav` | Adminstav | Høyreklikk spiller = GUI med kick, frys, heal, clear inv, tp |
+| `rewind_klokke` | Tidsklokke | Shift + høyreklikk = 5 sek tilbake (posisjon + HP) |
+| `void_perle` | Voidperle | Høyreklikk spiller = teleporterer dem til Y = -64 |
+| `massehealer` | Massehealer | Høyreklikk = healer alle innen 10 blokker |
 | `instillinger` | Matheo client | Klokke – shift åpner innstillinger (armor reach, full bright). |
-| `totem_stakk` | Totem-stakk | Papir (16 stk) – høyreklikk gir 1 Operator Totem og bruker én fra stakken. |
+| `totem_stakk` | Totem-stakk | Papir (16 stk) – høyreklikk gir 1 Operator Totem. |
+
+### Admin / Troll
+
+| Id | Navn | Effekt |
+|----|------|--------|
+| `fakeban` | Fake Ban-bok | Høyreklikk spiller = viser «You are banned» (kick) |
+| `torden_regn` | Tordenværstav | Høyreklikk = lynstorm |
+| `frysbombe` | Frysbombe | Kast snøball = fryser alle spillere i radius 10 sek |
+| `inverter` | Inverterstav | Høyreklikk spiller = bytter WASD i 10 sek |
+| `størrelse_orb` | Size Orb | Høyreklikk spiller = liten / gigantisk (krever Paper 1.20.5+) |
+| `dommedagsknapp` | Dommedagsknapp | Høyreklikk = sletter alle mobs i alle verdener |
 
 ## Requirements
 
@@ -98,7 +184,7 @@ Disse itemene kan gis med `/lager give <id>` og finnes i **OP-kisten** (`/kiste`
 .\gradlew jar
 ```
 
-Output: `build/libs/potato-<version>.jar` (version is set in `build.gradle.kts`).
+Output: `build/libs/potato-4.0.6.jar` (versjon står i `build.gradle.kts`).
 
 ## Deploying to a server
 
@@ -108,9 +194,9 @@ Output: `build/libs/potato-<version>.jar` (version is set in `build.gradle.kts`)
    ```
 2. Copy the JAR to the server’s `plugins/` folder. Use a **binary** transfer so the file isn’t corrupted:
    - **SCP (Linux/macOS or WSL):**  
-     `scp build/libs/potato-4.0.5.jar user@yourserver:~/minecraft/plugins/`
+     `scp build/libs/potato-4.0.6.jar user@yourserver:~/minecraft/plugins/`
    - **WinSCP / SFTP:** transfer in “binary” mode (default for .jar).
-   - **Other:** copy `build/libs/potato-4.0.5.jar` as-is; do not paste contents or use a text transfer.
+   - **Other:** copy `build/libs/potato-4.0.6.jar` as-is; do not paste contents or use a text transfer.
 
 If the server logs **`zip END header not found`** for the plugin, the JAR was corrupted during copy. Re-copy the file as binary and try again.
 
