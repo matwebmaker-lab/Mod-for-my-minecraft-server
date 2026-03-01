@@ -10,6 +10,7 @@ import no.lager.lager.listeners.OpKisteRefillListener;
 import no.lager.lager.inventory.LagerSettingsHolder;
 import no.lager.lager.listeners.LagerSettingsListener;
 import no.lager.lager.listeners.TotemStakkListener;
+import no.lager.lager.listeners.AdminFreezeListener;
 import no.lager.lager.listeners.TridentLightningListener;
 import no.lager.lager.listeners.VillagerAxeListener;
 import net.kyori.adventure.text.Component;
@@ -50,6 +51,7 @@ public final class LagerPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new TridentLightningListener(this), this);
         getServer().getPluginManager().registerEvents(new TotemStakkListener(this), this);
         getServer().getPluginManager().registerEvents(new VillagerAxeListener(this), this);
+        getServer().getPluginManager().registerEvents(new AdminFreezeListener(this), this);
         new OpArmorEffectsListener(this);
         getServer().getPluginManager().registerEvents(new LagerSettingsListener(this), this);
         startFullBrightTask();
