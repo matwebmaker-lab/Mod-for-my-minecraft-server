@@ -4,3 +4,6 @@
 # Rekkevidde (reach) når du har OP-brystplade på.
 # 0 = vanlig (ingen ekstra reach). 3–20 = antall blokker. Standard 10.
 armor_reach: 10
+
+# Full bright (Night Vision) – liste over spillere (UUID) som har det på.
+full_bright_players: []

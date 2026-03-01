@@ -22,8 +22,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
+import java.util.UUID;
 
 public final class LagerPlugin extends JavaPlugin {
 
@@ -46,6 +52,44 @@ public final class LagerPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new VillagerAxeListener(this), this);
         new OpArmorEffectsListener(this);
         getServer().getPluginManager().registerEvents(new LagerSettingsListener(this), this);
+        startFullBrightTask();
+    }
+
+    private static final String CONFIG_FULL_BRIGHT = "full_bright_players";
+    private static final int NIGHT_VISION_DURATION = 400; // 20 sekunder
+
+    private void startFullBrightTask() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (String uuidStr : getConfig().getStringList(CONFIG_FULL_BRIGHT)) {
+                    try {
+                        Player p = getServer().getPlayer(UUID.fromString(uuidStr));
+                        if (p != null && p.isOnline() && p.isOp()) {
+                            p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, NIGHT_VISION_DURATION, 0, true, false));
+                        }
+                    } catch (Exception ignored) {}
+                }
+            }
+        }.runTaskTimer(this, 40L, 40L);
+    }
+
+    public boolean isFullBright(UUID playerId) {
+        return getConfig().getStringList(CONFIG_FULL_BRIGHT).contains(playerId.toString());
+    }
+
+    public void setFullBright(Player player, boolean on) {
+        List<String> list = getConfig().getStringList(CONFIG_FULL_BRIGHT);
+        String uuid = player.getUniqueId().toString();
+        if (on) {
+            if (!list.contains(uuid)) list.add(uuid);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, NIGHT_VISION_DURATION, 0, true, false));
+        } else {
+            list.remove(uuid);
+            player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+        }
+        getConfig().set(CONFIG_FULL_BRIGHT, list);
+        saveConfig();
     }
 
     /** Hent armor-reach fra config (0 = vanlig, 3–20 = antall blokker). */
@@ -74,6 +118,9 @@ public final class LagerPlugin extends JavaPlugin {
         inv.setItem(11, makeButtonItem("minus", Material.RED_WOOL, Component.text("-1 (mindre reach)").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, true)));
         inv.setItem(13, makeButtonItem("vanlig", Material.GRAY_WOOL, Component.text("Vanlig (ingen ekstra reach)").color(NamedTextColor.GRAY).decoration(TextDecoration.BOLD, true)));
         inv.setItem(15, makeButtonItem("plus", Material.LIME_WOOL, Component.text("+1 (større reach)").color(NamedTextColor.GREEN).decoration(TextDecoration.BOLD, true)));
+        boolean fullBright = isFullBright(player.getUniqueId());
+        inv.setItem(22, makeButtonItem("fullbright", fullBright ? Material.TORCH : Material.REDSTONE_TORCH,
+                Component.text("Full bright: " + (fullBright ? "På" : "Av")).color(fullBright ? NamedTextColor.YELLOW : NamedTextColor.GRAY).decoration(TextDecoration.BOLD, true)));
         player.openInventory(inv);
     }
 

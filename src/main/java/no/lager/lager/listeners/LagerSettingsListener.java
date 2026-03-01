@@ -61,6 +61,10 @@ public final class LagerSettingsListener implements Listener {
         } else if ("vanlig".equals(btn)) {
             plugin.setArmorReach(0);
             player.sendMessage(net.kyori.adventure.text.Component.text("Reach satt til vanlig (ingen ekstra reach).").color(net.kyori.adventure.text.format.NamedTextColor.GREEN));
+        } else if ("fullbright".equals(btn)) {
+            boolean now = !plugin.isFullBright(player.getUniqueId());
+            plugin.setFullBright(player, now);
+            player.sendMessage(net.kyori.adventure.text.Component.text("Full bright " + (now ? "på." : "av.")).color(net.kyori.adventure.text.format.NamedTextColor.GREEN));
         }
         plugin.openSettingsGui(player);
     }
