@@ -11,7 +11,7 @@ commands:
     usage: /<command> [list|give <id>|gear|instillinger]
     permission: lager.use
   lagerkiste:
-    description: Åpner admin-kisten med mange OP-items (kun Admin_owner).
+    description: "Åpner admin-kisten med mange OP-items (kun Admin_owner)."
     usage: /<command>
     permission: lager.adminchest
   kiste:
@@ -19,7 +19,7 @@ commands:
     usage: /<command>
     permission: lager.kiste
   frys:
-    description: Admin_owner: slå frys på/av (fryser spillere og entities rundt deg).
+    description: "Admin_owner: slå frys på/av (fryser spillere og entities rundt deg)."
     usage: /<command>
     permission: lager.frys
 
@@ -34,5 +34,5 @@ permissions:
     description: Tillater åpning av OP-kisten (uendelig OP-gear).
     default: op
   lager.frys:
-    description: Tillater /frys (kun Admin_owner i praksis).
+    description: "Tillater /frys (kun Admin_owner i praksis)."
     default: op
