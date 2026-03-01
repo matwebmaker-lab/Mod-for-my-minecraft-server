@@ -2,7 +2,7 @@
 
 **Kildekode og bygg** for **Lager**-pluginen (OP Gear) for Paper 1.21.11.
 
-- **Versjon:** 4.0.3  
+- **Versjon:** 4.0.4  
 - **GitHub-repo:** [matwebmaker-lab/Mod-for-my-minecraft-server](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server)  
 - Ferdigbygd JAR kan lastes ned fra [Releases](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server/releases) på GitHub (når publisert).
 
@@ -46,9 +46,9 @@ Output: `build/libs/potato-<version>.jar` (version is set in `build.gradle.kts`)
    ```
 2. Copy the JAR to the server’s `plugins/` folder. Use a **binary** transfer so the file isn’t corrupted:
    - **SCP (Linux/macOS or WSL):**  
-     `scp build/libs/potato-4.0.3.jar user@yourserver:~/minecraft/plugins/`
+     `scp build/libs/potato-4.0.4.jar user@yourserver:~/minecraft/plugins/`
    - **WinSCP / SFTP:** transfer in “binary” mode (default for .jar).
-   - **Other:** copy `build/libs/potato-4.0.3.jar` as-is; do not paste contents or use a text transfer.
+   - **Other:** copy `build/libs/potato-4.0.4.jar` as-is; do not paste contents or use a text transfer.
 
 If the server logs **`zip END header not found`** for the plugin, the JAR was corrupted during copy. Re-copy the file as binary and try again.
 
