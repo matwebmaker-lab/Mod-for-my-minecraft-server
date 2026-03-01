@@ -61,6 +61,11 @@ public final class LagerCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
+        if (args[0].equalsIgnoreCase("gear")) {
+            giveOpGear(player);
+            return true;
+        }
+
         sendList(player);
         return true;
     }
@@ -68,7 +73,7 @@ public final class LagerCommand implements CommandExecutor, TabCompleter {
     private void sendList(Player player) {
         player.sendMessage(Component.empty());
         player.sendMessage(Component.text("── OP-items (Lager) ──").color(NamedTextColor.GOLD).decoration(TextDecoration.BOLD, true));
-        player.sendMessage(Component.text("Bruk: /lager give <id>").color(NamedTextColor.GRAY));
+        player.sendMessage(Component.text("Bruk: /lager give <id>  eller  /lager gear  (hele utstyret)").color(NamedTextColor.GRAY));
         player.sendMessage(Component.empty());
         for (Map.Entry<String, String> e : registry.getAllItems().entrySet()) {
             player.sendMessage(Component.text("  • " + e.getKey()).color(NamedTextColor.YELLOW)
@@ -100,6 +105,25 @@ public final class LagerCommand implements CommandExecutor, TabCompleter {
         }
     }
 
+    /** Gir OP-utstyret (rustning + våpen) – samme sett som tidligere ved join. */
+    private void giveOpGear(Player player) {
+        List<String> gearIds = List.of(
+                "op_helm", "op_bryst", "op_bukser", "op_støvler",
+                "storm_sverd", "dødspiler", "tordenøks", "krossbue", "trident"
+        );
+        for (String id : gearIds) {
+            ItemStack item = registry.createItem(id);
+            if (item != null) {
+                if (player.getInventory().addItem(item).isEmpty()) {
+                    // ok
+                } else {
+                    player.getWorld().dropItem(player.getLocation(), item);
+                }
+            }
+        }
+        player.sendMessage(Component.text("Du mottok OP-utstyret.").color(NamedTextColor.GREEN));
+    }
+
     private void giveArmorSet(Player player) {
         for (String piece : List.of("op_helm", "op_bryst", "op_bukser", "op_støvler")) {
             ItemStack item = registry.createItem(piece);
@@ -122,6 +146,7 @@ public final class LagerCommand implements CommandExecutor, TabCompleter {
             String a = args[0].toLowerCase();
             if ("list".startsWith(a)) out.add("list");
             if ("give".startsWith(a)) out.add("give");
+            if ("gear".startsWith(a)) out.add("gear");
         } else if (args.length == 2 && args[0].equalsIgnoreCase("give")) {
             String a = args[1].toLowerCase();
             for (String id : registry.getAllItems().keySet()) {

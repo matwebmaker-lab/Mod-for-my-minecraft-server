@@ -8,12 +8,16 @@ author: Lager
 commands:
   lager:
     description: Åpner meny med OP-spesielle våpen og rustninger (kun for operatorer).
-    usage: /<command> [list|give <id>]
+    usage: /<command> [list|give <id>|gear]
     permission: lager.use
   lagerkiste:
     description: Åpner admin-kisten med mange OP-items (kun Admin_owner).
     usage: /<command>
     permission: lager.adminchest
+  kiste:
+    description: Åpner OP-kisten med masse OP-gear som aldri blir tom.
+    usage: /<command>
+    permission: lager.kiste
 
 permissions:
   lager.use:
@@ -21,4 +25,7 @@ permissions:
     default: op
   lager.adminchest:
     description: Tillater åpning av admin-kisten (kun for Admin_owner).
+    default: op
+  lager.kiste:
+    description: Tillater åpning av OP-kisten (uendelig OP-gear).
     default: op
