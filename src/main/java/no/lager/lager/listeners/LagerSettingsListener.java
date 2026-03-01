@@ -33,7 +33,6 @@ public final class LagerSettingsListener implements Listener {
         if (!event.isSneaking()) return;
         Player player = event.getPlayer();
         if (!player.isOp()) return;
-        if (AdminFreezeListener.isAdminOwner(player)) return; // Admin_owner bruker shift til frys
         ItemStack main = player.getInventory().getItemInMainHand();
         if (main.isEmpty() || !registry.isOpItem(main) || !INSTILLINGER_ID.equals(registry.getOpItemId(main))) return;
         plugin.openSettingsGui(player);

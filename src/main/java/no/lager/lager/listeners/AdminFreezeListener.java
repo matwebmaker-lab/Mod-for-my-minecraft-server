@@ -9,7 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -19,8 +19,8 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Admin_owner: trykk shift for å fryse/avfryse spillere og entities rundt seg.
- * (Ctrl kan ikke oppdages på server, derfor brukes shift.)
+ * Admin_owner: trykk bytte-hender (kan bindes til R) eller /frys for å fryse/avfryse.
+ * Kun Admin_owner kan bevege seg når frys er på.
  */
 public final class AdminFreezeListener implements Listener {
 
@@ -53,16 +53,22 @@ public final class AdminFreezeListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onSneak(PlayerToggleSneakEvent event) {
+    public void onSwapHands(PlayerSwapHandItemsEvent event) {
         if (!ADMIN_OWNER_NAME.equals(event.getPlayer().getName())) return;
-        if (!event.isSneaking()) return;
-        UUID id = event.getPlayer().getUniqueId();
+        event.setCancelled(true);
+        toggleFreeze(event.getPlayer());
+    }
+
+    /** Slå frys på/av for Admin_owner (kalles fra bytte-hender eller /frys). */
+    public void toggleFreeze(Player player) {
+        if (!ADMIN_OWNER_NAME.equals(player.getName())) return;
+        UUID id = player.getUniqueId();
         if (freezeActive.contains(id)) {
             freezeActive.remove(id);
-            event.getPlayer().sendMessage(Component.text("Frys av – spillere og entities kan bevege seg igjen.").color(NamedTextColor.YELLOW));
+            player.sendMessage(Component.text("Frys av – spillere og entities kan bevege seg igjen.").color(NamedTextColor.YELLOW));
         } else {
             freezeActive.add(id);
-            event.getPlayer().sendMessage(Component.text("Frys på – spillere og entities rundt deg er fryst.").color(NamedTextColor.GREEN));
+            player.sendMessage(Component.text("Frys på – spillere og entities rundt deg er fryst.").color(NamedTextColor.GREEN));
         }
     }
 
@@ -73,6 +79,7 @@ public final class AdminFreezeListener implements Listener {
                 && event.getFrom().getBlockZ() == event.getTo().getBlockZ()) return;
         Player mover = event.getPlayer();
         for (UUID adminId : freezeActive) {
+            if (mover.getUniqueId().equals(adminId)) continue; // Kun Admin_owner kan bevege seg
             Player admin = plugin.getServer().getPlayer(adminId);
             if (admin == null || !admin.isOnline()) continue;
             if (admin.getWorld() != mover.getWorld()) continue;

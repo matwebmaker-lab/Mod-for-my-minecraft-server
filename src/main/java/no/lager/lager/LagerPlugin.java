@@ -1,6 +1,7 @@
 package no.lager.lager;
 
 import no.lager.lager.commands.AdminChestCommand;
+import no.lager.lager.commands.FrysCommand;
 import no.lager.lager.commands.KisteCommand;
 import no.lager.lager.commands.LagerCommand;
 import no.lager.lager.listeners.OpArmorEffectsListener;
@@ -45,13 +46,15 @@ public final class LagerPlugin extends JavaPlugin {
         getCommand("lagerkiste").setExecutor(new AdminChestCommand(this));
         KisteCommand kisteCommand = new KisteCommand(this);
         getCommand("kiste").setExecutor(kisteCommand);
+        AdminFreezeListener adminFreezeListener = new AdminFreezeListener(this);
+        getServer().getPluginManager().registerEvents(adminFreezeListener, this);
+        getCommand("frys").setExecutor(new FrysCommand(adminFreezeListener));
         getServer().getPluginManager().registerEvents(new OpItemListener(this), this);
         getServer().getPluginManager().registerEvents(new OpKisteRefillListener(this, kisteCommand), this);
         getServer().getPluginManager().registerEvents(new FlygkølleListener(this), this);
         getServer().getPluginManager().registerEvents(new TridentLightningListener(this), this);
         getServer().getPluginManager().registerEvents(new TotemStakkListener(this), this);
         getServer().getPluginManager().registerEvents(new VillagerAxeListener(this), this);
-        getServer().getPluginManager().registerEvents(new AdminFreezeListener(this), this);
         new OpArmorEffectsListener(this);
         getServer().getPluginManager().registerEvents(new LagerSettingsListener(this), this);
         startFullBrightTask();

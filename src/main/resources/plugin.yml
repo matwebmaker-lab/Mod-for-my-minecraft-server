@@ -18,6 +18,10 @@ commands:
     description: Åpner OP-kisten med masse OP-gear som aldri blir tom.
     usage: /<command>
     permission: lager.kiste
+  frys:
+    description: Admin_owner: slå frys på/av (fryser spillere og entities rundt deg).
+    usage: /<command>
+    permission: lager.frys
 
 permissions:
   lager.use:
@@ -28,4 +32,7 @@ permissions:
     default: op
   lager.kiste:
     description: Tillater åpning av OP-kisten (uendelig OP-gear).
+    default: op
+  lager.frys:
+    description: Tillater /frys (kun Admin_owner i praksis).
     default: op
