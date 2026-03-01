@@ -66,6 +66,13 @@ public final class LagerCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
+        if (args[0].equalsIgnoreCase("instillinger")) {
+            if (plugin instanceof no.lager.lager.LagerPlugin lager) {
+                lager.openSettingsGui(player);
+            }
+            return true;
+        }
+
         sendList(player);
         return true;
     }
@@ -147,6 +154,7 @@ public final class LagerCommand implements CommandExecutor, TabCompleter {
             if ("list".startsWith(a)) out.add("list");
             if ("give".startsWith(a)) out.add("give");
             if ("gear".startsWith(a)) out.add("gear");
+            if ("instillinger".startsWith(a)) out.add("instillinger");
         } else if (args.length == 2 && args[0].equalsIgnoreCase("give")) {
             String a = args[1].toLowerCase();
             for (String id : registry.getAllItems().keySet()) {

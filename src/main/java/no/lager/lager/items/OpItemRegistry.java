@@ -188,6 +188,15 @@ public final class OpItemRegistry {
                     ),
                     new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE});
 
+            case "fly_støvler" -> createOpItem(id, Material.IRON_BOOTS,
+                    Component.text("Flygestøvler").color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false),
+                    lore("Fly som i creative – dobbeltklikk hopp for å fly."),
+                    Map.of(
+                            Enchantment.UNBREAKING, 3,
+                            Enchantment.FEATHER_FALLING, 2
+                    ),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
             case "op_rustning_sett" -> null; // Håndteres av kommandoen som fullt sett
 
             // —— VERKTØY & EKSTRA ——
@@ -239,6 +248,28 @@ public final class OpItemRegistry {
                     null,
                     null);
 
+            case "flygkølle" -> createOpItem(id, Material.BLAZE_ROD,
+                    Component.text("Flygkølle").color(NamedTextColor.AQUA).decoration(TextDecoration.ITALIC, false),
+                    lore("Høyreklikk: send entities flygende i retningen du peker."),
+                    null,
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "instillinger" -> createOpItem(id, Material.CLOCK,
+                    Component.text("Lager-innstillinger").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
+                    lore("Hold i hånden og trykk shift for å åpne.", "Styr armor-reach (rekkevidde)."),
+                    null,
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
+            case "totem_stakk" -> {
+                ItemStack stakk = createOpItem(id, Material.PAPER,
+                        Component.text("Totem-stakk").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
+                        lore("Høyreklikk: få ett Operator Totem.", "Stablet – én totem per bruk."),
+                        null,
+                        new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+                if (stakk != null) stakk.setAmount(16);
+                yield stakk;
+            }
+
             default -> null;
         };
     }
@@ -246,11 +277,11 @@ public final class OpItemRegistry {
     /** Alle item-ids som skal fylle admin-kisten (inkl. duplikater for mange slots). */
     public List<String> getChestFillIds() {
         return List.of(
-                "storm_sverd", "storm_sverd", "dødspiler", "dødspiler", "tordenøks", "krossbue", "trident",
+                "storm_sverd", "storm_sverd", "dødspiler", "dødspiler", "tordenøks", "krossbue", "trident", "flygkølle",
                 "op_helm", "op_bryst", "op_bukser", "op_støvler",
                 "op_helm", "op_bryst", "op_bukser", "op_støvler",
                 "op_spade", "op_pickaxe", "op_spade", "op_pickaxe",
-                "op_skjold", "op_elytra", "op_totem", "op_gulleneple",
+                "op_skjold", "op_elytra", "op_totem", "op_gulleneple", "fly_støvler", "instillinger", "totem_stakk", "totem_stakk",
                 "op_totem", "op_gulleneple", "op_gulleneple", "op_gulleneple",
                 "storm_sverd", "dødspiler", "tordenøks", "krossbue", "trident",
                 "op_helm", "op_bryst", "op_bukser", "op_støvler",
@@ -271,13 +302,17 @@ public final class OpItemRegistry {
                 Map.entry("op_bryst", "Operator Brystplade"),
                 Map.entry("op_bukser", "Operator Bukse"),
                 Map.entry("op_støvler", "Operator Støvler"),
+                Map.entry("fly_støvler", "Flygestøvler (fly som creative)"),
                 Map.entry("op_rustning_sett", "Hele OP-rustningsett (helm, bryst, bukse, støvler)"),
                 Map.entry("op_spade", "Operator Spade"),
                 Map.entry("op_pickaxe", "Operator Hakke"),
                 Map.entry("op_skjold", "Operator Skjold"),
                 Map.entry("op_elytra", "Operator Elytra"),
                 Map.entry("op_totem", "Operator Totem"),
-                Map.entry("op_gulleneple", "Operator Gulleneple")
+                Map.entry("op_gulleneple", "Operator Gulleneple"),
+                Map.entry("flygkølle", "Flygkølle (send entities flyende)"),
+                Map.entry("instillinger", "Lager-innstillinger (shift for å åpne)"),
+                Map.entry("totem_stakk", "Totem-stakk (høyreklikk = 1 totem)")
         );
     }
 }

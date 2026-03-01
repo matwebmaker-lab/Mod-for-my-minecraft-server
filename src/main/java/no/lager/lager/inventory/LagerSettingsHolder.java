@@ -4,25 +4,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Holder for OP-kisten – brukes for å gjenkjenne at en inventory er
- * den "uendelige" OP-kisten som refylles når man tar items.
- */
-public final class OpKisteHolder implements InventoryHolder {
+/** Holder for Lager-innstillingsskjermen (kun for OP – armor reach). */
+public final class LagerSettingsHolder implements InventoryHolder {
 
     private Inventory inventory;
-    private int page;
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
-    }
-
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
     }
 
     @Override

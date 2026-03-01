@@ -1,0 +1,6 @@
+# Lager – OP Gear
+# Kun operatorer påvirkes av disse innstillingene.
+
+# Rekkevidde (reach) når du har OP-brystplade på (antall blokker).
+# Standard 10. Min 3, max 20. Gjelder både blokk- og entity-reach.
+armor_reach: 10

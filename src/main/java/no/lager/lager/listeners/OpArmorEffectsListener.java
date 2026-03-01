@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.GameMode;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -19,17 +20,19 @@ import org.bukkit.scheduler.BukkitRunnable;
  * - Brystplade: 10 blokker reach (blokk + entity)
  * - Bukse: styrke (Strength) + vanndråper
  * - Støvler: Speed
+ * - Flygestøvler (iron boots): fly som i creative
  */
 public final class OpArmorEffectsListener implements Listener {
 
     private static final double HELMET_EXTRA_HEALTH = 20.0;
-    private static final double CHESTPLATE_BLOCK_REACH_ADD = 5.5;  // default 4.5 + 5.5 = 10 blokker
-    private static final double CHESTPLATE_ENTITY_REACH_ADD = 7.0; // default 3 + 7 = 10 blokker
+    private static final double DEFAULT_BLOCK_REACH = 4.5;
+    private static final double DEFAULT_ENTITY_REACH = 3.0;
     private static final int LEGGINGS_WATER_BREATHING_DURATION = 400;
     private static final int LEGGINGS_STRENGTH_DURATION = 200;     // fornyes ofte
     private static final int LEGGINGS_STRENGTH_AMPLIFIER = 1;       // Styrke II
     private static final int SPEED_DURATION = 200;                 // 10 sekunder
     private static final int SPEED_AMPLIFIER = 1;                  // Speed II
+    private static final float FLY_SPEED_CREATIVE = 0.1f;          // som creative
 
     private final JavaPlugin plugin;
     private final OpItemRegistry registry;
@@ -67,6 +70,7 @@ public final class OpArmorEffectsListener implements Listener {
         boolean hasOpChest = isOpPiece(chest, "op_bryst");
         boolean hasOpLegs = isOpPiece(legs, "op_bukser");
         boolean hasOpBoots = isOpPiece(boots, "op_støvler");
+        boolean hasFlyBoots = isOpPiece(boots, "fly_støvler");
 
         // Hjelm: +20 max liv (Paper 1.21.11: Attribute.MAX_HEALTH)
         AttributeInstance maxHealth = player.getAttribute(Attribute.MAX_HEALTH);
@@ -81,14 +85,18 @@ public final class OpArmorEffectsListener implements Listener {
             }
         }
 
-        // Brystplade: 10 blokker reach
+        // Brystplade: reach fra config (armor_reach blokker)
+        int configReach = plugin.getConfig().getInt("armor_reach", 10);
+        configReach = Math.max(3, Math.min(20, configReach));
+        double blockReachAdd = configReach - DEFAULT_BLOCK_REACH;
+        double entityReachAdd = configReach - DEFAULT_ENTITY_REACH;
         AttributeInstance blockReach = player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE);
         if (blockReach != null) {
             removeModifierByKey(blockReach, keyBlockReach);
-            if (hasOpChest) {
+            if (hasOpChest && blockReachAdd > 0) {
                 blockReach.addModifier(new AttributeModifier(
                         keyBlockReach,
-                        CHESTPLATE_BLOCK_REACH_ADD,
+                        blockReachAdd,
                         AttributeModifier.Operation.ADD_NUMBER
                 ));
             }
@@ -96,10 +104,10 @@ public final class OpArmorEffectsListener implements Listener {
         AttributeInstance entityReach = player.getAttribute(Attribute.ENTITY_INTERACTION_RANGE);
         if (entityReach != null) {
             removeModifierByKey(entityReach, keyEntityReach);
-            if (hasOpChest) {
+            if (hasOpChest && entityReachAdd > 0) {
                 entityReach.addModifier(new AttributeModifier(
                         keyEntityReach,
-                        CHESTPLATE_ENTITY_REACH_ADD,
+                        entityReachAdd,
                         AttributeModifier.Operation.ADD_NUMBER
                 ));
             }
@@ -114,6 +122,15 @@ public final class OpArmorEffectsListener implements Listener {
         // Støvler: speed
         if (hasOpBoots) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, SPEED_DURATION, SPEED_AMPLIFIER, true, false));
+        }
+
+        // Flygestøvler: fly som i creative (allowFlight + fly speed)
+        if (hasFlyBoots) {
+            player.setAllowFlight(true);
+            player.setFlySpeed(FLY_SPEED_CREATIVE);
+        } else if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
+            player.setAllowFlight(false);
+            player.setFlySpeed(0.05f); // default survival
         }
     }
 
