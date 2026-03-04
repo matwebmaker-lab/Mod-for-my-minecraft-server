@@ -14,6 +14,10 @@ commands:
     description: "Åpner admin-kisten med mange OP-items (kun Admin_owner)."
     usage: /<command>
     permission: lager.adminchest
+  inventory:
+    description: "Se inventory til en spiller: /inventory view <spiller> (kun OP)."
+    usage: /<command> view <spiller>
+    permission: lager.inventoryview
   kiste:
     description: Åpner OP-kisten med masse OP-gear som aldri blir tom.
     usage: /<command>
@@ -70,4 +74,7 @@ permissions:
     default: op
   lager.spectateplus:
     description: Tillater /spectateplus.
+    default: op
+  lager.inventoryview:
+    description: Tillater /inventory view (se andres inventory).
     default: op

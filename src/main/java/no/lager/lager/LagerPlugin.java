@@ -2,6 +2,7 @@ package no.lager.lager;
 
 import no.lager.lager.commands.AdminChestCommand;
 import no.lager.lager.commands.FrysCommand;
+import no.lager.lager.commands.InventoryCommand;
 import no.lager.lager.commands.KisteCommand;
 import no.lager.lager.commands.LagerCommand;
 import no.lager.lager.commands.OpExtrasCommand;
@@ -51,6 +52,9 @@ public final class LagerPlugin extends JavaPlugin {
         getCommand("lagerkiste").setExecutor(new AdminChestCommand(this));
         KisteCommand kisteCommand = new KisteCommand(this);
         getCommand("kiste").setExecutor(kisteCommand);
+        InventoryCommand inventoryCommand = new InventoryCommand();
+        getCommand("inventory").setExecutor(inventoryCommand);
+        getCommand("inventory").setTabCompleter(inventoryCommand);
         AdminFreezeListener adminFreezeListener = new AdminFreezeListener(this);
         getServer().getPluginManager().registerEvents(adminFreezeListener, this);
         getCommand("frys").setExecutor(new FrysCommand(adminFreezeListener));
