@@ -67,47 +67,50 @@ public final class TrollVillagerType {
             default -> {}
         }
         villager.setCustomNameVisible(true);
-        villager.setVillagerType(Villager.Type.PLAINS); // tydelig type slik at handel fungerer
-        villager.setVillagerLevel(1); // må ha nivå 1+ for at handel skal fungere
+        villager.setVillagerType(Villager.Type.PLAINS);
+        // nivå settes ETTER oppskrifter i SpawnVillagerCommand (på neste tick)
     }
 
-    /** Én dummy-oppskrift så Gjøgleren åpner handel-GUI (vi kaster potion i listener). */
+    /** Lager en gyldig MerchantRecipe som vises i handel (experienceReward + villagerExperience). */
+    private static MerchantRecipe recipe(org.bukkit.inventory.ItemStack result, org.bukkit.inventory.ItemStack ingredient) {
+        MerchantRecipe r = new MerchantRecipe(result, 0, 999, true, 1, 0.05f);
+        r.addIngredient(ingredient);
+        return r;
+    }
+
+    /** Gjøgleren selger pinne og papir (så handel åpnes – listener kaster potion). */
     public static void setJesterRecipes(Villager villager) {
         List<MerchantRecipe> recipes = new ArrayList<>();
-        MerchantRecipe r = new MerchantRecipe(new org.bukkit.inventory.ItemStack(Material.STICK), 999);
-        r.addIngredient(new org.bukkit.inventory.ItemStack(Material.EMERALD, 1));
-        recipes.add(r);
+        recipes.add(recipe(new org.bukkit.inventory.ItemStack(Material.STICK, 4), new org.bukkit.inventory.ItemStack(Material.EMERALD, 1)));
+        recipes.add(recipe(new org.bukkit.inventory.ItemStack(Material.PAPER, 8), new org.bukkit.inventory.ItemStack(Material.EMERALD, 1)));
         villager.setRecipes(recipes);
     }
 
-    /** Én dummy-oppskrift så Skatteinnkreveren åpner handel-GUI. */
+    /** Skatteinnkreveren selger papir og bøker. */
     public static void setTaxRecipes(Villager villager) {
         List<MerchantRecipe> recipes = new ArrayList<>();
-        MerchantRecipe r = new MerchantRecipe(new org.bukkit.inventory.ItemStack(Material.PAPER), 999);
-        r.addIngredient(new org.bukkit.inventory.ItemStack(Material.EMERALD, 1));
-        recipes.add(r);
+        recipes.add(recipe(new org.bukkit.inventory.ItemStack(Material.PAPER, 24), new org.bukkit.inventory.ItemStack(Material.EMERALD, 1)));
+        recipes.add(recipe(new org.bukkit.inventory.ItemStack(Material.BOOK, 4), new org.bukkit.inventory.ItemStack(Material.EMERALD, 2)));
         villager.setRecipes(recipes);
     }
 
-    /** Opprett oppskrifter for Svindleren (Magiske diamanter). */
+    /** Svindleren selger Magiske diamanter (blir til kull/potet) + “billig” diamant. */
     public static void setScammerRecipes(Villager villager, TrollItemRegistry trollItems) {
         List<MerchantRecipe> recipes = new ArrayList<>();
-        MerchantRecipe r = new MerchantRecipe(trollItems.createMagicDiamond(), 999);
-        r.addIngredient(new org.bukkit.inventory.ItemStack(Material.EMERALD, 5));
-        recipes.add(r);
+        recipes.add(recipe(trollItems.createMagicDiamond(), new org.bukkit.inventory.ItemStack(Material.EMERALD, 5)));
+        recipes.add(recipe(new org.bukkit.inventory.ItemStack(Material.DIAMOND), new org.bukkit.inventory.ItemStack(Material.EMERALD, 3)));
         villager.setRecipes(recipes);
     }
 
-    /** Opprett oppskrifter for Boomer (billig Netherite). */
+    /** Boomer selger Netherite-ingot og diamant. */
     public static void setBoomerRecipes(Villager villager) {
         List<MerchantRecipe> recipes = new ArrayList<>();
-        MerchantRecipe r = new MerchantRecipe(new org.bukkit.inventory.ItemStack(Material.NETHERITE_INGOT), 64);
-        r.addIngredient(new org.bukkit.inventory.ItemStack(Material.EMERALD, 1));
-        recipes.add(r);
+        recipes.add(recipe(new org.bukkit.inventory.ItemStack(Material.NETHERITE_INGOT), new org.bukkit.inventory.ItemStack(Material.EMERALD, 1)));
+        recipes.add(recipe(new org.bukkit.inventory.ItemStack(Material.DIAMOND, 2), new org.bukkit.inventory.ItemStack(Material.EMERALD, 1)));
         villager.setRecipes(recipes);
     }
 
-    /** Tilfeldige troll-oppskrifter for Glitchen. */
+    /** Tilfeldige troll-oppskrifter for Glitchen (alle med experienceReward så de vises). */
     public static List<MerchantRecipe> randomGlitchRecipes(TrollItemRegistry trollItems) {
         ThreadLocalRandom r = ThreadLocalRandom.current();
         List<MerchantRecipe> list = new ArrayList<>();
@@ -121,16 +124,19 @@ public final class TrollVillagerType {
                 String id = trollIds[r.nextInt(trollIds.length)];
                 org.bukkit.inventory.ItemStack result = trollItems.createTrollItem(id);
                 if (result != null) {
-                    MerchantRecipe rec = new MerchantRecipe(result, 3);
+                    MerchantRecipe rec = new MerchantRecipe(result, 0, 99, true, 1, 0.05f);
                     rec.addIngredient(new org.bukkit.inventory.ItemStack(Material.EMERALD, 1 + r.nextInt(10)));
                     list.add(rec);
                 }
             } else {
                 Material mat = results[r.nextInt(results.length)];
-                MerchantRecipe rec = new MerchantRecipe(new org.bukkit.inventory.ItemStack(mat, 1 + r.nextInt(16)), 5);
+                MerchantRecipe rec = new MerchantRecipe(new org.bukkit.inventory.ItemStack(mat, 1 + r.nextInt(16)), 0, 99, true, 1, 0.05f);
                 rec.addIngredient(new org.bukkit.inventory.ItemStack(Material.EMERALD, 1 + r.nextInt(5)));
                 list.add(rec);
             }
+        }
+        if (list.isEmpty()) {
+            list.add(recipe(new org.bukkit.inventory.ItemStack(Material.EMERALD), new org.bukkit.inventory.ItemStack(Material.DIAMOND)));
         }
         return list;
     }

@@ -12,6 +12,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -59,15 +60,22 @@ public final class SpawnVillagerCommand implements CommandExecutor, TabCompleter
         TrollVillagerType.setType(v, type, plugin);
         TrollVillagerType.applyAppearance(v, type);
 
-        switch (type) {
-            case TrollVillagerType.SCAMMER -> TrollVillagerType.setScammerRecipes(v, trollItems);
-            case TrollVillagerType.BOOMER -> TrollVillagerType.setBoomerRecipes(v);
-            case TrollVillagerType.GLITCH -> v.setRecipes(TrollVillagerType.randomGlitchRecipes(trollItems));
-            case TrollVillagerType.JESTER -> TrollVillagerType.setJesterRecipes(v);
-            case TrollVillagerType.TAX -> TrollVillagerType.setTaxRecipes(v);
-        }
-        v.setVillagerLevel(1); // nivå etter oppskrifter, så handel-GUI åpnes
-        v.setVillagerExperience(0);
+        // Sett oppskrifter og nivå på neste tick så villageren er ferdig spawnet – da vises salget
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!v.isValid()) return;
+                switch (type) {
+                    case TrollVillagerType.SCAMMER -> TrollVillagerType.setScammerRecipes(v, trollItems);
+                    case TrollVillagerType.BOOMER -> TrollVillagerType.setBoomerRecipes(v);
+                    case TrollVillagerType.GLITCH -> v.setRecipes(TrollVillagerType.randomGlitchRecipes(trollItems));
+                    case TrollVillagerType.JESTER -> TrollVillagerType.setJesterRecipes(v);
+                    case TrollVillagerType.TAX -> TrollVillagerType.setTaxRecipes(v);
+                }
+                v.setVillagerExperience(0);
+                v.setVillagerLevel(1);
+            }
+        }.runTaskLater(plugin, 1L);
 
         player.sendMessage(Component.text("Troll-landsbyboer spawnet: " + type).color(NamedTextColor.YELLOW));
         return true;
