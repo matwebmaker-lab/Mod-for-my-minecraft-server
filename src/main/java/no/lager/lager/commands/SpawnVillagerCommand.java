@@ -63,10 +63,8 @@ public final class SpawnVillagerCommand implements CommandExecutor, TabCompleter
             case TrollVillagerType.SCAMMER -> TrollVillagerType.setScammerRecipes(v, trollItems);
             case TrollVillagerType.BOOMER -> TrollVillagerType.setBoomerRecipes(v);
             case TrollVillagerType.GLITCH -> v.setRecipes(TrollVillagerType.randomGlitchRecipes(trollItems));
-            case TrollVillagerType.JESTER, TrollVillagerType.TAX -> {
-                List<org.bukkit.inventory.MerchantRecipe> empty = new ArrayList<>();
-                v.setRecipes(empty);
-            }
+            case TrollVillagerType.JESTER -> TrollVillagerType.setJesterRecipes(v);
+            case TrollVillagerType.TAX -> TrollVillagerType.setTaxRecipes(v);
         }
 
         player.sendMessage(Component.text("Troll-landsbyboer spawnet: " + type).color(NamedTextColor.YELLOW));

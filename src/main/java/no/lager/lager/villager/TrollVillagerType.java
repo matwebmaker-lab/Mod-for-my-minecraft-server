@@ -50,7 +50,7 @@ public final class TrollVillagerType {
             }
             case JESTER -> {
                 villager.customName(Component.text("Gjøgleren").color(NamedTextColor.LIGHT_PURPLE));
-                villager.setProfession(Villager.Profession.NITWIT);
+                villager.setProfession(Villager.Profession.CARTOGRAPHER); // må ha jobb for å kunne trade
             }
             case TAX -> {
                 villager.customName(Component.text("Skatteinnkreveren").color(NamedTextColor.RED));
@@ -67,6 +67,25 @@ public final class TrollVillagerType {
             default -> {}
         }
         villager.setCustomNameVisible(true);
+        villager.setVillagerLevel(1); // må ha nivå 1+ for at handel skal fungere
+    }
+
+    /** Én dummy-oppskrift så Gjøgleren åpner handel-GUI (vi kaster potion i listener). */
+    public static void setJesterRecipes(Villager villager) {
+        List<MerchantRecipe> recipes = new ArrayList<>();
+        MerchantRecipe r = new MerchantRecipe(new org.bukkit.inventory.ItemStack(Material.STICK), 999);
+        r.addIngredient(new org.bukkit.inventory.ItemStack(Material.EMERALD, 1));
+        recipes.add(r);
+        villager.setRecipes(recipes);
+    }
+
+    /** Én dummy-oppskrift så Skatteinnkreveren åpner handel-GUI. */
+    public static void setTaxRecipes(Villager villager) {
+        List<MerchantRecipe> recipes = new ArrayList<>();
+        MerchantRecipe r = new MerchantRecipe(new org.bukkit.inventory.ItemStack(Material.PAPER), 999);
+        r.addIngredient(new org.bukkit.inventory.ItemStack(Material.EMERALD, 1));
+        recipes.add(r);
+        villager.setRecipes(recipes);
     }
 
     /** Opprett oppskrifter for Svindleren (Magiske diamanter). */

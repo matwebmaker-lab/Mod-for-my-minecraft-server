@@ -2,9 +2,9 @@
 
 **Kildekode og bygg** for **Lager**-pluginen (OP Gear) for Paper 1.21.11.
 
-- **Versjon:** 4.0.7  
+- **Versjon:** 4.0.8  
 - **GitHub-repo:** [matwebmaker-lab/Mod-for-my-minecraft-server](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server)  
-- Ferdigbygd JAR: `build/libs/potato-4.0.7.jar` (eller nyere ved `.\gradlew jar`).
+- Ferdigbygd JAR: `build/libs/potato-4.0.8.jar` (eller nyere ved `.\gradlew jar`).
 
 ---
 
@@ -62,14 +62,14 @@
 - **Admin/Troll:** Fake Ban-bok, Tordenværstav, Frysbombe, Inverterstav (WASD byttes), Size Orb (liten/gigant).
 - **Mythic:** Void Kongekrone (creative flight + resist), Dommedagsknapp (sletter alle mobs).
 - **Nye kommandoer:** `/opmode`, `/troll <spiller>`, `/boost`, `/arena`, `/spectateplus <spiller>`.
-- **OP-fun (4.0.7):** `/inventory view <spiller>`, `/blind`, `/levitate`, `/anvil`, `/scare`, `/spin`, `/spam`, `/jail`, `/tnt`, `/invclear`, `/mute`.
-- **Troll-landsbyboere (4.0.7):** `/spawnvillager <type>` – Svindleren (magiske diamanter → kull/potet), Gjøgleren (splash-potion + løp), Skatteinnkreveren (tar 1 smaragd/min), Eksplosiv Selger (creeper-lyd ved handel), Glitchen (oppskrifter byttes hele tiden). Troll-varer: Magiske diamanter, Uknuselig hakke, Teleport-eple, Hemsko-støvler.
+- **OP-fun (4.0.8):** `/inventory view <spiller>`, `/blind`, `/levitate`, `/anvil`, `/scare`, `/spin`, `/spam`, `/jail`, `/tnt`, `/invclear`, `/mute`.
+- **Troll-landsbyboere (4.0.8):** `/spawnvillager <type>` – Svindleren (magiske diamanter → kull/potet), Gjøgleren (splash-potion + løp), Skatteinnkreveren (tar 1 smaragd/min), Eksplosiv Selger (creeper-lyd ved handel), Glitchen (oppskrifter byttes hele tiden). Troll-varer: Magiske diamanter, Uknuselig hakke, Teleport-eple, Hemsko-støvler.
 
 ---
 
 ## Gamle ting vs. nye ting (for git / release)
 
-**Opprinnelige / gamle ting (før 4.0.7):**
+**Opprinnelige / gamle ting (før 4.0.8):**
 - `/lager`, `/lager give`, `/lager gear`, `/lager list`, `/lager instillinger`
 - `/lagerkiste` (Admin_owner), `/kiste` (OP-kiste med sider)
 - `/frys` (Admin_owner) + bytte-hender-tasten
@@ -79,13 +79,13 @@
 - Spesial: Flygestav (flygkølle), Matheo client (instillinger), Totem-stakk
 - Tordenøks på villager → belønning; Havets Vrede → lyn; Admin_owner frys
 
-**Nye ting (4.0.6–4.0.7):**
+**Nye ting (4.0.6–4.0.8):**
 - **Kommandoer:** `/opmode`, `/troll <spiller>`, `/boost`, `/arena`, `/spectateplus <spiller>`, `/inventory view`, `/blind`, `/levitate`, `/anvil`, `/scare`, `/spin`, `/spam`, `/jail`, `/tnt`, `/invclear`, `/mute`, `/spawnvillager`
 - **Våpen:** Dommens Sverd, Vakuumbue, Kaosstav, Gravitasjonsøks, Blodtrident, Tidsknuser
 - **Rustning:** Operator Kappe, Void Hjelm, Titan Brystplate, Magnetbukse, Froststøvler, Void Kongekrone
 - **Spesial:** Adminstav (GUI), Tidsklokke (rewind), Voidperle, Massehealer, Verdensbryter
 - **Admin/Troll:** Fake Ban-bok, Tordenværstav, Frysbombe, Inverterstav, Size Orb, Dommedagsknapp
-- **Troll-landsbyboere (4.0.7):** Svindleren, Gjøgleren, Skatteinnkreveren, Eksplosiv Selger, Glitchen. Troll-varer: Magiske diamanter, Uknuselig hakke, Teleport-eple, Hemsko-støvler
+- **Troll-landsbyboere (4.0.8):** Svindleren, Gjøgleren, Skatteinnkreveren, Eksplosiv Selger, Glitchen. Troll-varer: Magiske diamanter, Uknuselig hakke, Teleport-eple, Hemsko-støvler
 
 ---
 
@@ -223,7 +223,7 @@ Disse itemene kan gis med `/lager give <id>` og finnes i **OP-kisten** (`/kiste`
 .\gradlew jar
 ```
 
-Output: `build/libs/potato-4.0.7.jar` (versjon står i `build.gradle.kts`).
+Output: `build/libs/potato-4.0.8.jar` (versjon står i `build.gradle.kts`).
 
 ## Deploying to a server
 
@@ -233,11 +233,11 @@ Output: `build/libs/potato-4.0.7.jar` (versjon står i `build.gradle.kts`).
    ```
 2. Copy the JAR to the server’s `plugins/` folder. Use a **binary** transfer so the file isn’t corrupted:
    - **SCP (Linux/macOS or WSL):**  
-     `scp build/libs/potato-4.0.7.jar user@yourserver:~/minecraft/plugins/`
+     `scp build/libs/potato-4.0.8.jar user@yourserver:~/minecraft/plugins/`
    - **WinSCP / SFTP:** transfer in “binary” mode (default for .jar).
-   - **Other:** copy `build/libs/potato-4.0.7.jar` as-is; do not paste contents or use a text transfer.
+   - **Other:** copy `build/libs/potato-4.0.8.jar` as-is; do not paste contents or use a text transfer.
 
-If the server logs **`zip END header not found`** for the plugin, the JAR was corrupted during copy. Re-copy the file as binary and try again. Current build output: `potato-4.0.7.jar`.
+If the server logs **`zip END header not found`** for the plugin, the JAR was corrupted during copy. Re-copy the file as binary and try again. Current build output: `potato-4.0.8.jar`.
 
 ## Running the server locally
 
