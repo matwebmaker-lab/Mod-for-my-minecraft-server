@@ -5,7 +5,10 @@ import no.lager.lager.commands.FrysCommand;
 import no.lager.lager.commands.InventoryCommand;
 import no.lager.lager.commands.KisteCommand;
 import no.lager.lager.commands.LagerCommand;
+import no.lager.lager.commands.MuteCommand;
 import no.lager.lager.commands.OpExtrasCommand;
+import no.lager.lager.commands.SpawnVillagerCommand;
+import no.lager.lager.commands.OpFunCommand;
 import no.lager.lager.listeners.OpArmorEffectsListener;
 import no.lager.lager.listeners.OpItemListener;
 import no.lager.lager.listeners.FlygkølleListener;
@@ -19,6 +22,8 @@ import no.lager.lager.listeners.NewOpArmorListener;
 import no.lager.lager.listeners.NewOpSpecialListener;
 import no.lager.lager.listeners.NewOpTrollListener;
 import no.lager.lager.listeners.TridentLightningListener;
+import no.lager.lager.listeners.MuteListener;
+import no.lager.lager.listeners.TrollVillagerListener;
 import no.lager.lager.listeners.VillagerAxeListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -37,7 +42,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class LagerPlugin extends JavaPlugin {
 
@@ -68,6 +75,16 @@ public final class LagerPlugin extends JavaPlugin {
         getCommand("arena").setExecutor(opExtras);
         getCommand("spectateplus").setExecutor(opExtras);
         getCommand("spectateplus").setTabCompleter(opExtras);
+        OpFunCommand opFun = new OpFunCommand(this);
+        for (String cmd : new String[]{"blind", "levitate", "anvil", "scare", "spin", "spam", "jail", "tnt", "invclear"}) {
+            getCommand(cmd).setExecutor(opFun);
+            getCommand(cmd).setTabCompleter(opFun);
+        }
+        Set<UUID> mutedPlayers = ConcurrentHashMap.newKeySet();
+        MuteCommand muteCommand = new MuteCommand(mutedPlayers);
+        getCommand("mute").setExecutor(muteCommand);
+        getCommand("mute").setTabCompleter(muteCommand);
+        getServer().getPluginManager().registerEvents(new MuteListener(mutedPlayers), this);
         getServer().getPluginManager().registerEvents(new OpItemListener(this), this);
         getServer().getPluginManager().registerEvents(new OpKisteRefillListener(this, kisteCommand), this);
         getServer().getPluginManager().registerEvents(new FlygkølleListener(this), this);
@@ -78,6 +95,10 @@ public final class LagerPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new NewOpArmorListener(this), this);
         getServer().getPluginManager().registerEvents(new NewOpSpecialListener(this), this);
         getServer().getPluginManager().registerEvents(new NewOpTrollListener(this), this);
+        SpawnVillagerCommand spawnVillagerCommand = new SpawnVillagerCommand(this);
+        getCommand("spawnvillager").setExecutor(spawnVillagerCommand);
+        getCommand("spawnvillager").setTabCompleter(spawnVillagerCommand);
+        getServer().getPluginManager().registerEvents(new TrollVillagerListener(this), this);
         new OpArmorEffectsListener(this);
         getServer().getPluginManager().registerEvents(new LagerSettingsListener(this), this);
         startFullBrightTask();

@@ -46,6 +46,50 @@ commands:
     description: Spectate uten at spiller vet.
     usage: /<command> <spiller>
     permission: lager.spectateplus
+  blind:
+    description: Gjør skjermen mørk for en spiller (OP).
+    usage: /<command> <spiller>
+    permission: lager.opfun
+  levitate:
+    description: Får spilleren til å flyte oppover (OP).
+    usage: /<command> <spiller>
+    permission: lager.opfun
+  anvil:
+    description: Slipp en ambolt over spilleren (OP).
+    usage: /<command> <spiller>
+    permission: lager.opfun
+  scare:
+    description: Vis jump-scare til spiller (OP).
+    usage: /<command> <spiller>
+    permission: lager.opfun
+  spin:
+    description: Få spilleren til å snurre (OP).
+    usage: /<command> <spiller>
+    permission: lager.opfun
+  spam:
+    description: Fyll chatten til spilleren med tull (OP).
+    usage: /<command> <spiller>
+    permission: lager.opfun
+  jail:
+    description: Lås spiller inne i glassbur (OP).
+    usage: /<command> <spiller>
+    permission: lager.opfun
+  tnt:
+    description: Spawn TNT ved føttene til spilleren (OP).
+    usage: /<command> <spiller>
+    permission: lager.opfun
+  invclear:
+    description: Tøm inventaret til en spiller (OP).
+    usage: /<command> <spiller>
+    permission: lager.opfun
+  mute:
+    description: Hindre spiller i å skrive i chat (OP).
+    usage: /<command> <spiller>
+    permission: lager.mute
+  spawnvillager:
+    description: Spawn en troll-landsbyboer (scammer, jester, tax, boomer, glitch). Kun OP.
+    usage: /<command> <type>
+    permission: lager.spawnvillager
 
 permissions:
   lager.use:
@@ -77,4 +121,13 @@ permissions:
     default: op
   lager.inventoryview:
     description: Tillater /inventory view (se andres inventory).
+    default: op
+  lager.opfun:
+    description: Tillater OP-troll-kommandoer (blind, levitate, anvil, scare, spin, spam, jail, tnt, invclear).
+    default: op
+  lager.mute:
+    description: Tillater /mute (mute spillere i chat).
+    default: op
+  lager.spawnvillager:
+    description: Tillater å spawne troll-landsbyboere.
     default: op
