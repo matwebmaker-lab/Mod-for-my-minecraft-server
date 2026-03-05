@@ -130,6 +130,8 @@ Admin_owner kan også bruke **bytte-hender**-tasten (f.eks. R) for å slå frys 
 
 ### Troll-landsbyboere (`/spawnvillager`)
 
+Alle troll-landsbyboere kan **alltid** høyreklikkes for å åpne handel (uavhengig av hva du holder i hånden – tordenøks, flygestav, adminstav osv. blokkerer ikke handel med troll-villagere).
+
 | Type | Navn | Oppførsel |
 |------|------|------------|
 | `scammer` | Svindleren | Selger «Magiske diamanter» for 5 smaragder – blir til kull eller malt potet i inventar. |

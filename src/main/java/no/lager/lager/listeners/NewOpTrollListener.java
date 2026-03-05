@@ -3,6 +3,7 @@ package no.lager.lager.listeners;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import no.lager.lager.items.OpItemRegistry;
+import no.lager.lager.villager.TrollVillagerType;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -50,6 +51,7 @@ public final class NewOpTrollListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onInteractEntity(PlayerInteractEntityEvent event) {
+        if (event.getRightClicked() instanceof Villager v && TrollVillagerType.isTrollVillager(v, plugin)) return;
         Player player = event.getPlayer();
         if (!player.isOp()) return;
         ItemStack item = player.getInventory().getItemInMainHand();

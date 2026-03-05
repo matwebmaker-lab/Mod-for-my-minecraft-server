@@ -66,6 +66,8 @@ public final class SpawnVillagerCommand implements CommandExecutor, TabCompleter
             case TrollVillagerType.JESTER -> TrollVillagerType.setJesterRecipes(v);
             case TrollVillagerType.TAX -> TrollVillagerType.setTaxRecipes(v);
         }
+        v.setVillagerLevel(1); // nivå etter oppskrifter, så handel-GUI åpnes
+        v.setVillagerExperience(0);
 
         player.sendMessage(Component.text("Troll-landsbyboer spawnet: " + type).color(NamedTextColor.YELLOW));
         return true;

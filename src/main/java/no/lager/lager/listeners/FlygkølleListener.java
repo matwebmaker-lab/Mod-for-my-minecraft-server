@@ -1,6 +1,7 @@
 package no.lager.lager.listeners;
 
 import no.lager.lager.items.OpItemRegistry;
+import no.lager.lager.villager.TrollVillagerType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -103,10 +104,11 @@ public final class FlygkølleListener implements Listener {
         carriedEntities.remove(event.getPlayer().getUniqueId());
     }
 
-    /** Med Flygestav på villager: ikke åpne trade. Med noe annet: åpne trade som vanlig. */
+    /** Med Flygestav på villager: ikke åpne trade. Unntak: troll-landsbyboere skal alltid kunne handles med. */
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = false)
     public void onInteractEntity(PlayerInteractEntityEvent event) {
-        if (!(event.getRightClicked() instanceof Villager)) return;
+        if (!(event.getRightClicked() instanceof Villager villager)) return;
+        if (TrollVillagerType.isTrollVillager(villager, plugin)) return;
         if (isHoldingFlygestav(event.getPlayer())) {
             event.setCancelled(true);
         }

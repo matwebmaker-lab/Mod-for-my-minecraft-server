@@ -3,6 +3,7 @@ package no.lager.lager.listeners;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import no.lager.lager.items.OpItemRegistry;
+import no.lager.lager.villager.TrollVillagerType;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -32,7 +33,9 @@ public final class VillagerAxeListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onInteractEntity(PlayerInteractEntityEvent event) {
-        if (!(event.getRightClicked() instanceof Villager)) return;
+        if (!(event.getRightClicked() instanceof Villager villager)) return;
+        // Troll-landsbyboere skal alltid kunne handles med – ikke kanseller
+        if (TrollVillagerType.isTrollVillager(villager, plugin)) return;
         Player player = event.getPlayer();
         if (!player.isOp()) return;
 

@@ -67,6 +67,7 @@ public final class TrollVillagerType {
             default -> {}
         }
         villager.setCustomNameVisible(true);
+        villager.setVillagerType(Villager.Type.PLAINS); // tydelig type slik at handel fungerer
         villager.setVillagerLevel(1); // må ha nivå 1+ for at handel skal fungere
     }
 

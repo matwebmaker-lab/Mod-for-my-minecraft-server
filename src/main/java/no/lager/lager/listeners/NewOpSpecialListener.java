@@ -4,11 +4,13 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import no.lager.lager.inventory.AdminStavHolder;
 import no.lager.lager.items.OpItemRegistry;
+import no.lager.lager.villager.TrollVillagerType;
 import org.bukkit.*;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -82,6 +84,7 @@ public final class NewOpSpecialListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onInteractEntity(PlayerInteractEntityEvent event) {
+        if (event.getRightClicked() instanceof Villager v && TrollVillagerType.isTrollVillager(v, plugin)) return;
         Player player = event.getPlayer();
         if (!player.isOp()) return;
         ItemStack item = player.getInventory().getItemInMainHand();
