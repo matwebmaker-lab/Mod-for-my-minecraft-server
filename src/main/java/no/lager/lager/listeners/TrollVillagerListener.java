@@ -48,6 +48,25 @@ public final class TrollVillagerListener implements Listener {
         startJesterTask();
         startTaxTask();
         startHemskoTask();
+        startTrollVillagerJobFixTask();
+    }
+
+    /** Holder yrket på troll-landsbyboere (Paper resetter profession etter 1 tick uten dette). */
+    private void startTrollVillagerJobFixTask() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (World w : plugin.getServer().getWorlds()) {
+                    for (Villager v : w.getEntitiesByClass(Villager.class)) {
+                        if (!v.isValid() || !TrollVillagerType.isTrollVillager(v, plugin)) continue;
+                        String type = TrollVillagerType.getType(v, plugin);
+                        TrollVillagerType.applyAppearance(v, type);
+                        v.setVillagerExperience(1);
+                        v.setVillagerLevel(1);
+                    }
+                }
+            }
+        }.runTaskTimer(plugin, 40L, 40L); // hvert 2. sekund
     }
 
     private void startJesterTask() {

@@ -58,13 +58,14 @@ public final class SpawnVillagerCommand implements CommandExecutor, TabCompleter
 
         Villager v = (Villager) player.getWorld().spawnEntity(player.getLocation(), EntityType.VILLAGER);
         TrollVillagerType.setType(v, type, plugin);
-        TrollVillagerType.applyAppearance(v, type);
+        v.setPersistent(true); // ikke despawn, og hjelper med at data holder seg
 
-        // Sett oppskrifter og nivå på neste tick så villageren er ferdig spawnet – da vises salget
+        // Yrke + oppskrifter + nivå på neste tick (ellers forsvinner yrket etter 1 tick i Paper)
         new BukkitRunnable() {
             @Override
             public void run() {
                 if (!v.isValid()) return;
+                TrollVillagerType.applyAppearance(v, type);
                 switch (type) {
                     case TrollVillagerType.SCAMMER -> TrollVillagerType.setScammerRecipes(v, trollItems);
                     case TrollVillagerType.BOOMER -> TrollVillagerType.setBoomerRecipes(v);
@@ -72,10 +73,21 @@ public final class SpawnVillagerCommand implements CommandExecutor, TabCompleter
                     case TrollVillagerType.JESTER -> TrollVillagerType.setJesterRecipes(v);
                     case TrollVillagerType.TAX -> TrollVillagerType.setTaxRecipes(v);
                 }
-                v.setVillagerExperience(0);
+                v.setVillagerExperience(1); // må være > 0 slik at yrket ikke resettes (Paper workaround)
                 v.setVillagerLevel(1);
             }
         }.runTaskLater(plugin, 1L);
+
+        // Gjenta yrke + XP etter 20 ticks slik at klienten ser jobben (cache-issue)
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!v.isValid()) return;
+                TrollVillagerType.applyAppearance(v, type);
+                v.setVillagerExperience(1);
+                v.setVillagerLevel(1);
+            }
+        }.runTaskLater(plugin, 20L);
 
         player.sendMessage(Component.text("Troll-landsbyboer spawnet: " + type).color(NamedTextColor.YELLOW));
         return true;
