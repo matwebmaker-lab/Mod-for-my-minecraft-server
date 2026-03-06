@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
+import org.bukkit.World;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -32,6 +33,13 @@ public final class TardisCommand implements CommandExecutor, TabCompleter {
     private static final String KEY_INTERIOR = "tardis.interior";
     private static final String KEY_EXIT = "tardis.exit";
     private static final String KEY_DOOR = "tardis.door";
+
+    /** Stort lukket rom – utsiden ses ikke inne. Radius fra senter, høyde over gulv. */
+    private static final int INTERIOR_RADIUS = 10;
+    private static final int INTERIOR_HEIGHT = 6;
+    private static final Material INTERIOR_WALL = Material.STONE_BRICKS;
+    private static final Material INTERIOR_FLOOR = Material.DEEPSLATE_BRICKS;
+    private static final Material INTERIOR_CEILING = Material.DEEPSLATE_BRICKS;
 
     private final JavaPlugin plugin;
 
@@ -71,9 +79,14 @@ public final class TardisCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage(Component.text("TARDIS-inngang og egen dør satt. Åpne døra og gå inn for å komme til det store rommet.").color(NamedTextColor.GREEN));
             }
             case "setinterior" -> {
-                saveLoc(config, KEY_INTERIOR, player.getLocation());
+                Location center = player.getLocation();
+                if (center.getWorld() == null) return true;
+                buildEnclosedInterior(center.getWorld(), center.getBlockX(), center.getBlockY(), center.getBlockZ());
+                Location spawnIn = new Location(center.getWorld(), center.getBlockX() + 0.5, center.getBlockY() + 1, center.getBlockZ() + 0.5, center.getYaw(), center.getPitch());
+                saveLoc(config, KEY_INTERIOR, spawnIn);
                 plugin.saveConfig();
-                player.sendMessage(Component.text("TARDIS-interiør satt her (stort rom – spillere teleporteres hit når de går inn i det lille huset).").color(NamedTextColor.GREEN));
+                player.teleport(spawnIn);
+                player.sendMessage(Component.text("TARDIS-interiør bygget: stort lukket rom – utsiden ses ikke. Spillere teleporteres hit når de går inn.").color(NamedTextColor.GREEN));
             }
             case "setexit" -> {
                 saveLoc(config, KEY_EXIT, player.getLocation());
@@ -148,6 +161,28 @@ public final class TardisCommand implements CommandExecutor, TabCompleter {
         top.setFacing(facing);
         above.setBlockData(top);
         return true;
+    }
+
+    /** Bygger et stort lukket rom (gulv, vegger, tak) – innsiden er stort, utsiden ses ikke. */
+    private void buildEnclosedInterior(World world, int cx, int cy, int cz) {
+        int r = INTERIOR_RADIUS;
+        int h = INTERIOR_HEIGHT;
+        for (int x = cx - r; x <= cx + r; x++) {
+            for (int z = cz - r; z <= cz + r; z++) {
+                world.getBlockAt(x, cy, z).setType(INTERIOR_FLOOR);
+                world.getBlockAt(x, cy + h, z).setType(INTERIOR_CEILING);
+            }
+        }
+        for (int y = cy + 1; y <= cy + h - 1; y++) {
+            for (int x = cx - r; x <= cx + r; x++) {
+                world.getBlockAt(x, y, cz - r).setType(INTERIOR_WALL);
+                world.getBlockAt(x, y, cz + r).setType(INTERIOR_WALL);
+            }
+            for (int z = cz - r; z <= cz + r; z++) {
+                world.getBlockAt(cx - r, y, z).setType(INTERIOR_WALL);
+                world.getBlockAt(cx + r, y, z).setType(INTERIOR_WALL);
+            }
+        }
     }
 
     private void saveLoc(FileConfiguration config, String prefix, Location loc) {
