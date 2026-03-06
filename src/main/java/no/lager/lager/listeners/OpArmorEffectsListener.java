@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.GameMode;
+import org.bukkit.Particle;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -132,6 +133,21 @@ public final class OpArmorEffectsListener implements Listener {
             player.setAllowFlight(false);
             player.setFlySpeed(0.05f); // default survival
         }
+
+        // Kule partikler når du har OP-rustning på
+        boolean hasAnyOpArmor = hasOpHelm || hasOpChest || hasOpLegs || hasOpBoots;
+        if (hasAnyOpArmor && player.getWorld().getPlayers().contains(player)) {
+            spawnOpArmorParticles(player);
+        }
+    }
+
+    /** Spawner magiske partikler rundt spiller med OP-rustning. */
+    private void spawnOpArmorParticles(Player player) {
+        var loc = player.getLocation().add(0, 1, 0);
+        var world = player.getWorld();
+        double r = 0.4;
+        world.spawnParticle(Particle.ENCHANT, loc, 4, r, 0.3, r, 0.08);
+        world.spawnParticle(Particle.ENCHANTED_HIT, loc, 2, r, 0.2, r, 0.02);
     }
 
     private boolean isOpPiece(ItemStack item, String opId) {

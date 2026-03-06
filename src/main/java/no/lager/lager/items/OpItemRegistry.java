@@ -8,7 +8,11 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ArmorMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.trim.ArmorTrim;
+import org.bukkit.inventory.meta.trim.TrimMaterial;
+import org.bukkit.inventory.meta.trim.TrimPattern;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -69,6 +73,19 @@ public final class OpItemRegistry {
         meta.getPersistentDataContainer().set(opItemKey, org.bukkit.persistence.PersistentDataType.BOOLEAN, true);
         meta.getPersistentDataContainer().set(opItemIdKey, org.bukkit.persistence.PersistentDataType.STRING, id);
         stack.setItemMeta(meta);
+        return stack;
+    }
+
+    /** Legger til kule armor-trim på rustning (1.20+). */
+    private ItemStack createOpArmorItem(String id, Material material, Component name, List<Component> lore,
+                                        Map<Enchantment, Integer> enchants, ItemFlag[] flags,
+                                        TrimMaterial trimMaterial, TrimPattern trimPattern) {
+        ItemStack stack = createOpItem(id, material, name, lore, enchants, flags);
+        ItemMeta meta = stack.getItemMeta();
+        if (meta instanceof ArmorMeta armorMeta) {
+            armorMeta.setTrim(new ArmorTrim(trimMaterial, trimPattern));
+            stack.setItemMeta(armorMeta);
+        }
         return stack;
     }
 
@@ -143,8 +160,8 @@ public final class OpItemRegistry {
                     ),
                     new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE});
 
-            // —— RUSTNING ——
-            case "op_helm" -> createOpItem(id, Material.NETHERITE_HELMET,
+            // —— RUSTNING (med kule armor-trim) ——
+            case "op_helm" -> createOpArmorItem(id, Material.NETHERITE_HELMET,
                     Component.text("Operator Hjelm").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
                     lore("Full beskyttelse for operatorer."),
                     Map.of(
@@ -154,9 +171,10 @@ public final class OpItemRegistry {
                             Enchantment.UNBREAKING, 5,
                             Enchantment.MENDING, 1
                     ),
-                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE});
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE},
+                    TrimMaterial.GOLD, TrimPattern.SENTRY);
 
-            case "op_bryst" -> createOpItem(id, Material.NETHERITE_CHESTPLATE,
+            case "op_bryst" -> createOpArmorItem(id, Material.NETHERITE_CHESTPLATE,
                     Component.text("Operator Brystplade").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
                     lore("Uovervinnelig brystbeskyttelse."),
                     Map.of(
@@ -164,9 +182,10 @@ public final class OpItemRegistry {
                             Enchantment.UNBREAKING, 5,
                             Enchantment.MENDING, 1
                     ),
-                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE});
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE},
+                    TrimMaterial.GOLD, TrimPattern.SENTRY);
 
-            case "op_bukser" -> createOpItem(id, Material.NETHERITE_LEGGINGS,
+            case "op_bukser" -> createOpArmorItem(id, Material.NETHERITE_LEGGINGS,
                     Component.text("Operator Bukse").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
                     lore("Leggbeskyttelse for de som styrer."),
                     Map.of(
@@ -174,9 +193,10 @@ public final class OpItemRegistry {
                             Enchantment.UNBREAKING, 5,
                             Enchantment.MENDING, 1
                     ),
-                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE});
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE},
+                    TrimMaterial.GOLD, TrimPattern.SENTRY);
 
-            case "op_støvler" -> createOpItem(id, Material.NETHERITE_BOOTS,
+            case "op_støvler" -> createOpArmorItem(id, Material.NETHERITE_BOOTS,
                     Component.text("Operator Støvler").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
                     lore("Feather Falling og beskyttelse."),
                     Map.of(
@@ -186,7 +206,8 @@ public final class OpItemRegistry {
                             Enchantment.UNBREAKING, 5,
                             Enchantment.MENDING, 1
                     ),
-                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE});
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE},
+                    TrimMaterial.GOLD, TrimPattern.SENTRY);
 
             case "fly_støvler" -> createOpItem(id, Material.IRON_BOOTS,
                     Component.text("Flygestøvler").color(NamedTextColor.WHITE).decoration(TextDecoration.ITALIC, false),
@@ -314,29 +335,33 @@ public final class OpItemRegistry {
                     Map.of(Enchantment.UNBREAKING, 5, Enchantment.MENDING, 1),
                     new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
 
-            case "void_helm" -> createOpItem(id, Material.NETHERITE_HELMET,
+            case "void_helm" -> createOpArmorItem(id, Material.NETHERITE_HELMET,
                     Component.text("Void Hjelm").color(NamedTextColor.DARK_PURPLE).decoration(TextDecoration.ITALIC, false),
                     lore("Night Vision + ser spillere gjennom vegger (glow)."),
                     Map.of(Enchantment.PROTECTION, 5, Enchantment.UNBREAKING, 5),
-                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS},
+                    TrimMaterial.AMETHYST, TrimPattern.EYE);
 
-            case "titan_bryst" -> createOpItem(id, Material.NETHERITE_CHESTPLATE,
+            case "titan_bryst" -> createOpArmorItem(id, Material.NETHERITE_CHESTPLATE,
                     Component.text("Titan Brystplate").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
                     lore("50% mindre damage."),
                     Map.of(Enchantment.PROTECTION, 8, Enchantment.UNBREAKING, 5),
-                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS},
+                    TrimMaterial.NETHERITE, TrimPattern.RAISER);
 
-            case "magnet_bukse" -> createOpItem(id, Material.NETHERITE_LEGGINGS,
+            case "magnet_bukse" -> createOpArmorItem(id, Material.NETHERITE_LEGGINGS,
                     Component.text("Magnetbukse").color(NamedTextColor.AQUA).decoration(TextDecoration.ITALIC, false),
                     lore("Trekker drops automatisk til deg."),
                     Map.of(Enchantment.PROTECTION, 5, Enchantment.UNBREAKING, 5),
-                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS},
+                    TrimMaterial.REDSTONE, TrimPattern.RIB);
 
-            case "frost_støvler" -> createOpItem(id, Material.NETHERITE_BOOTS,
+            case "frost_støvler" -> createOpArmorItem(id, Material.NETHERITE_BOOTS,
                     Component.text("Froststøvler").color(NamedTextColor.AQUA).decoration(TextDecoration.ITALIC, false),
                     lore("Fryser vann når du går (Frost Walker + permanent)."),
                     Map.of(Enchantment.FROST_WALKER, 2, Enchantment.PROTECTION, 5, Enchantment.UNBREAKING, 5),
-                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS},
+                    TrimMaterial.DIAMOND, TrimPattern.FLOW);
 
             // —— SPESIALITEMS ——
             case "admin_stav" -> createOpItem(id, Material.STICK,
@@ -401,11 +426,12 @@ public final class OpItemRegistry {
                     new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
 
             // —— MYTHIC ——
-            case "void_kongekrone" -> createOpItem(id, Material.NETHERITE_HELMET,
+            case "void_kongekrone" -> createOpArmorItem(id, Material.NETHERITE_HELMET,
                     Component.text("Void Kongekrone").color(NamedTextColor.LIGHT_PURPLE).decoration(TextDecoration.ITALIC, false),
                     lore("Creative flight + Resistance III."),
                     Map.of(Enchantment.PROTECTION, 5, Enchantment.UNBREAKING, 5),
-                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS},
+                    TrimMaterial.AMETHYST, TrimPattern.HOST);
 
             case "dommedagsknapp" -> createOpItem(id, Material.NETHERITE_SCRAP,
                     Component.text("Dommedagsknapp").color(NamedTextColor.DARK_RED).decoration(TextDecoration.ITALIC, false),
