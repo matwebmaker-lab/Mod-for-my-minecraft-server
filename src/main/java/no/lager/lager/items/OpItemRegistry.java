@@ -76,6 +76,15 @@ public final class OpItemRegistry {
         return stack;
     }
 
+    /** Setter Custom Model Data for resource pack (egen modell/tekstur). */
+    private void applyCustomModelData(ItemStack stack, int data) {
+        ItemMeta meta = stack.getItemMeta();
+        if (meta != null) {
+            meta.setCustomModelData(data);
+            stack.setItemMeta(meta);
+        }
+    }
+
     /** Legger til kule armor-trim på rustning (1.20+). */
     private ItemStack createOpArmorItem(String id, Material material, Component name, List<Component> lore,
                                         Map<Enchantment, Integer> enchants, ItemFlag[] flags,
@@ -160,11 +169,15 @@ public final class OpItemRegistry {
                     ),
                     new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE});
 
-            case "pistol" -> createOpItem(id, Material.BLAZE_ROD,
-                    Component.text("OP Pistol").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
-                    lore("Høyreklikk for å skyte. Lynrask og med kule effekter."),
-                    Map.of(Enchantment.UNBREAKING, 3),
-                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+            case "pistol" -> {
+                ItemStack stack = createOpItem(id, Material.BLAZE_ROD,
+                        Component.text("Nano Banana").color(NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false),
+                        lore("Høyreklikk for å skyte. Gul kule med kule grafikk – virker overalt."),
+                        Map.of(Enchantment.UNBREAKING, 3),
+                        new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+                applyCustomModelData(stack, 19001); // resource pack pistol-modell
+                yield stack;
+            }
 
             // —— RUSTNING (med kule armor-trim) ——
             case "op_helm" -> createOpArmorItem(id, Material.NETHERITE_HELMET,
@@ -481,7 +494,7 @@ public final class OpItemRegistry {
                 Map.entry("tordenøks", "Tordenøks (Netherite øks)"),
                 Map.entry("krossbue", "Mester-krossbue"),
                 Map.entry("trident", "Havets Vrede (Trident)"),
-                Map.entry("pistol", "OP Pistol (skyter med kule effekter)"),
+                Map.entry("pistol", "Nano Banana (skyter gul kule med kule grafikk)"),
                 Map.entry("op_helm", "Operator Hjelm"),
                 Map.entry("op_bryst", "Operator Brystplade"),
                 Map.entry("op_bukser", "Operator Bukse"),

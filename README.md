@@ -2,9 +2,9 @@
 
 **Kildekode og bygg** for **Lager**-pluginen (OP Gear) for Paper 1.21.11.
 
-- **Versjon:** 4.1.1  
+- **Versjon:** 4.1.4  
 - **GitHub-repo:** [matwebmaker-lab/Mod-for-my-minecraft-server](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server)  
-- Ferdigbygd JAR: `build/libs/potato-4.1.1.jar` (eller nyere ved `.\gradlew jar`).
+- Ferdigbygd JAR: `build/libs/potato-4.1.4.jar` (eller nyere ved `.\gradlew jar`).
 
 ---
 
@@ -69,6 +69,7 @@
 - **OP-fun (4.0.8):** `/inventory view <spiller>`, `/blind`, `/levitate`, `/anvil`, `/scare`, `/spin`, `/spam`, `/jail`, `/tnt`, `/invclear`, `/mute`.
 - **Troll-landsbyboere (4.0.8):** `/spawnvillager <type>` – Svindleren (magiske diamanter → kull/potet), Gjøgleren (splash-potion + løp), Skatteinnkreveren (tar 1 smaragd/min), Eksplosiv Selger (creeper-lyd ved handel), Glitchen (oppskrifter byttes hele tiden). Troll-varer: Magiske diamanter, Uknuselig hakke, Teleport-eple, Hemsko-støvler.
 - **TARDIS-hus (4.1.1):** `/tardis setentrance` plasserer en egen jerndør og setter inngangen – lite hus utvendig, stort rom innvendig. `/tardis setinterior` bygger et stort lukket rom (gulv, vegger, tak) – utsiden ses ikke. Kun når døra er åpen kan man gå inn. `/tardis setexit` for utgang inne.
+- **Nano Banana (4.1.4):** OP-pistol – høyreklikk skyter en gul «kule» med muzzle-flash, gul/oransje trail under flukt og treff-partikler. Virker overalt ( også uten å peke på blokk). Rustning har kule armor-trim og partikler når du har OP-rustning på.
 
 ---
 
@@ -92,6 +93,7 @@
 - **Admin/Troll:** Fake Ban-bok, Tordenværstav, Frysbombe, Inverterstav, Size Orb, Dommedagsknapp
 - **Troll-landsbyboere (4.0.8):** Svindleren, Gjøgleren, Skatteinnkreveren, Eksplosiv Selger, Glitchen. Troll-varer: Magiske diamanter, Uknuselig hakke, Teleport-eple, Hemsko-støvler
 - **TARDIS-hus (4.1.1):** Egen jerndør ved setentrance; setinterior bygger stort lukket rom (utsiden ses ikke). Kun åpen dør = innpass.
+- **4.1.2–4.1.4:** Kule armor-trim på OP-rustning og spesialrustning; partikler når du har OP-rustning på. **Nano Banana** (pistol): gul kule med muzzle-flash, trail og treff-grafikk; skyte uten å peke på blokk (HIGHEST prioritet).
 
 ---
 
@@ -175,15 +177,16 @@ Disse itemene kan gis med `/lager give <id>` og finnes i **OP-kisten** (`/kiste`
 | `tordenøks` | Tordenøks | Netherite-øks; høyreklikk på villager som OP gir belønning |
 | `krossbue` | Mester-krossbue | Krossbue med høye enchantments |
 | `trident` | Havets Vrede | Trident; lyn slår ned der den treffer |
+| `pistol` | Nano Banana | Høyreklikk skyter gul kule med muzzle/trail/treff-grafikk; virker overalt (uten å peke på blokk) |
 
 ### Rustning
 
 | Id | Navn | Effekt |
 |----|------|--------|
-| `op_helm` | Operator Hjelm | +20 max liv |
-| `op_bryst` | Operator Brystplade | Ekstra reach (antall blokker styres i Matheo client) |
-| `op_bukser` | Operator Bukse | Styrke II + vanndråper |
-| `op_støvler` | Operator Støvler | Speed II |
+| `op_helm` | Operator Hjelm | +20 max liv; gull armor-trim; partikler når på |
+| `op_bryst` | Operator Brystplade | Ekstra reach (antall blokker styres i Matheo client); gull trim |
+| `op_bukser` | Operator Bukse | Styrke II + vanndråper; gull trim |
+| `op_støvler` | Operator Støvler | Speed II; gull trim |
 | `op_kappe` | Operator Kappe | Immun mot fall damage |
 | `void_helm` | Void Hjelm | Night Vision + ser spillere gjennom vegger (glow innen 64 blokker) |
 | `titan_bryst` | Titan Brystplate | 50 % mindre damage |
@@ -239,7 +242,7 @@ Disse itemene kan gis med `/lager give <id>` og finnes i **OP-kisten** (`/kiste`
 .\gradlew jar
 ```
 
-Output: `build/libs/potato-4.1.1.jar` (versjon står i `build.gradle.kts`).
+Output: `build/libs/potato-4.1.4.jar` (versjon står i `build.gradle.kts`).
 
 ## Deploying to a server
 
@@ -249,11 +252,11 @@ Output: `build/libs/potato-4.1.1.jar` (versjon står i `build.gradle.kts`).
    ```
 2. Copy the JAR to the server’s `plugins/` folder. Use a **binary** transfer so the file isn’t corrupted:
    - **SCP (Linux/macOS or WSL):**  
-     `scp build/libs/potato-4.1.1.jar user@yourserver:~/minecraft/plugins/`
+     `scp build/libs/potato-4.1.4.jar user@yourserver:~/minecraft/plugins/`
    - **WinSCP / SFTP:** transfer in “binary” mode (default for .jar).
-   - **Other:** copy `build/libs/potato-4.1.1.jar` as-is; do not paste contents or use a text transfer.
+   - **Other:** copy `build/libs/potato-4.1.4.jar` as-is; do not paste contents or use a text transfer.
 
-If the server logs **`zip END header not found`** for the plugin, the JAR was corrupted during copy. Re-copy the file as binary and try again. Current build output: `potato-4.1.1.jar`.
+If the server logs **`zip END header not found`** for the plugin, the JAR was corrupted during copy. Re-copy the file as binary and try again. Current build output: `potato-4.1.4.jar`.
 
 ## Running the server locally
 

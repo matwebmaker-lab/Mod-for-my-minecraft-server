@@ -1,0 +1,28 @@
+Slik konverterer du Colt 1911 (GLB) til Minecraft-pistol
+========================================================
+
+Filen colt_1911.glb ligger her. For å bruke den som 3D-pistol i resource packen:
+
+1. Last ned Blockbench (gratis): https://www.blockbench.net/
+
+2. Åpne Blockbench → File → Import → 3D Model (glTF/GLB)
+   Velg: colt_1911.glb
+
+3. Modellen kan ha mange deler. For Minecraft Java item må vi bruke
+   "Convert to Block/Item Model" (Plugin eller via meny) for å gjøre
+   den om til kuber, ELLER eksportere som "Minecraft Java Block/Item".
+   - Hvis du ser "Convert to Block/Item": bruk den, deretter File → Export → Export Minecraft Java Block/Item
+   - Ellers: File → Export → Export Minecraft Java Block/Item (Blockbench konverterer)
+
+4. Lagre den eksporterte .json-filen som:
+   resourcepack/assets/lager/models/item/pistol.json
+   (erstatt den nåværende pistol.json)
+
+5. Teksturer: Hvis Blockbench eksporterer en teksturmappe, kopier
+   teksturene til resourcepack/assets/lager/textures/item/
+   og oppdater texture-stier i pistol.json om nødvendig.
+
+6. Zip resourcepack-mappen og legg i .minecraft/resourcepacks/
+
+Kreditering: Modellen er "Colt 1911 (Silencer + Flashlight)" av MKoegler3D
+på Sketchfab, CC Attribution – kreditér MKoegler3D i pack-beskrivelsen.
