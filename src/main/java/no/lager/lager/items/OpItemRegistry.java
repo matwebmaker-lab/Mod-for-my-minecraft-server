@@ -160,6 +160,12 @@ public final class OpItemRegistry {
                     ),
                     new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE});
 
+            case "pistol" -> createOpItem(id, Material.BLAZE_ROD,
+                    Component.text("OP Pistol").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
+                    lore("Høyreklikk for å skyte. Lynrask og med kule effekter."),
+                    Map.of(Enchantment.UNBREAKING, 3),
+                    new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+
             // —— RUSTNING (med kule armor-trim) ——
             case "op_helm" -> createOpArmorItem(id, Material.NETHERITE_HELMET,
                     Component.text("Operator Hjelm").color(NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false),
@@ -446,14 +452,14 @@ public final class OpItemRegistry {
     /** Alle item-ids som skal fylle admin-kisten (inkl. duplikater for mange slots). */
     public List<String> getChestFillIds() {
         return List.of(
-                "storm_sverd", "storm_sverd", "dommersverd", "vakuumbue", "tordenøks", "gravitasjonsøks", "blodtrident", "tidsknuser", "kaosstav",
+                "storm_sverd", "storm_sverd", "dommersverd", "vakuumbue", "pistol", "tordenøks", "gravitasjonsøks", "blodtrident", "tidsknuser", "kaosstav",
                 "op_helm", "op_bryst", "op_bukser", "op_støvler",
                 "op_kappe", "void_helm", "titan_bryst", "magnet_bukse", "frost_støvler",
                 "op_spade", "op_pickaxe", "verdensbryter", "flygkølle",
                 "op_skjold", "op_elytra", "op_totem", "op_gulleneple", "fly_støvler", "instillinger", "totem_stakk", "totem_stakk",
                 "admin_stav", "rewind_klokke", "void_perle", "massehealer",
                 "fakeban", "torden_regn", "frysbombe", "inverter", "størrelse_orb",
-                "storm_sverd", "dødspiler", "tordenøks", "krossbue", "trident",
+                "storm_sverd", "dødspiler", "tordenøks", "krossbue", "trident", "pistol",
                 "op_helm", "op_bryst", "op_bukser", "op_støvler",
                 "op_spade", "op_pickaxe", "op_skjold", "op_elytra",
                 "void_kongekrone", "dommedagsknapp",
@@ -475,6 +481,7 @@ public final class OpItemRegistry {
                 Map.entry("tordenøks", "Tordenøks (Netherite øks)"),
                 Map.entry("krossbue", "Mester-krossbue"),
                 Map.entry("trident", "Havets Vrede (Trident)"),
+                Map.entry("pistol", "OP Pistol (skyter med kule effekter)"),
                 Map.entry("op_helm", "Operator Hjelm"),
                 Map.entry("op_bryst", "Operator Brystplade"),
                 Map.entry("op_bukser", "Operator Bukse"),

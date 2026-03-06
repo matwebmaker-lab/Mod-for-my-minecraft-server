@@ -116,7 +116,7 @@ public final class LagerCommand implements CommandExecutor, TabCompleter {
     private void giveOpGear(Player player) {
         List<String> gearIds = List.of(
                 "op_helm", "op_bryst", "op_bukser", "op_støvler",
-                "storm_sverd", "dødspiler", "tordenøks", "krossbue", "trident"
+                "storm_sverd", "dødspiler", "tordenøks", "krossbue", "trident", "pistol"
         );
         for (String id : gearIds) {
             ItemStack item = registry.createItem(id);

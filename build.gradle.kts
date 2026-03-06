@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "no.lager"
-version = "4.1.2"
+version = "4.1.3"
 
 val runDir = file("run")
 

@@ -19,6 +19,7 @@ import no.lager.lager.listeners.LagerSettingsListener;
 import no.lager.lager.listeners.TotemStakkListener;
 import no.lager.lager.listeners.AdminFreezeListener;
 import no.lager.lager.listeners.NewOpWeaponsListener;
+import no.lager.lager.listeners.PistolListener;
 import no.lager.lager.listeners.NewOpArmorListener;
 import no.lager.lager.listeners.NewOpSpecialListener;
 import no.lager.lager.listeners.NewOpTrollListener;
@@ -94,6 +95,7 @@ public final class LagerPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new TotemStakkListener(this), this);
         getServer().getPluginManager().registerEvents(new VillagerAxeListener(this), this);
         getServer().getPluginManager().registerEvents(new NewOpWeaponsListener(this), this);
+        getServer().getPluginManager().registerEvents(new PistolListener(this), this);
         getServer().getPluginManager().registerEvents(new NewOpArmorListener(this), this);
         getServer().getPluginManager().registerEvents(new NewOpSpecialListener(this), this);
         getServer().getPluginManager().registerEvents(new NewOpTrollListener(this), this);
