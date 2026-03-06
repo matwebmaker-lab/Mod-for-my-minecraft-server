@@ -1,0 +1,19 @@
+Slik ser du pistolen (Nano Banana) i Minecraft
+=================================================
+
+Hvis du bare ser en vanlig blaze rod, mangler du resource packen på PC-en din.
+
+1. Finn zip-filen: Lager-Pistol-Pack.zip (i prosjektmappen)
+
+2. Kopier den til Minecraft resourcepacks-mappen:
+   - Windows: %appdata%\.minecraft\resourcepacks\
+   - Mac: ~/Library/Application Support/minecraft/resourcepacks/
+   (Åpne Minecraft → Options → Resource Packs → Open pack folder)
+
+3. I Minecraft: Options → Resource Packs → velg "Lager / OP Gear – pistol"
+   og flytt den til "Selected" (aktiv).
+
+4. Start spillet på nytt eller bytt verden. Nano Banana skal nå vises som pistol (flat sprite/pixels).
+
+Hvis du spiller på en server: Resource packen må være på DIN PC (klienten).
+Serveren trenger bare pluginen (JAR); modellen lastes av spillet ditt.

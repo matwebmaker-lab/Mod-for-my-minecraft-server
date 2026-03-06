@@ -43,7 +43,9 @@ public final class PistolListener implements Listener {
         this.pistolArrowKey = new NamespacedKey(plugin, "pistol_arrow");
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    // ignoreCancelled = false: RIGHT_CLICK_AIR kan komme inn som kansellert (vanilla gjør ingenting i lufta),
+    // da må vi likevel motta den for å la pistol skyte uten å peke på blokk
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onPistolShoot(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
