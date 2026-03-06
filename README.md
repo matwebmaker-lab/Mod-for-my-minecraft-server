@@ -2,9 +2,9 @@
 
 **Kildekode og bygg** for **Lager**-pluginen (OP Gear) for Paper 1.21.11.
 
-- **Versjon:** 4.0.8  
+- **Versjon:** 4.1.0  
 - **GitHub-repo:** [matwebmaker-lab/Mod-for-my-minecraft-server](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server)  
-- Ferdigbygd JAR: `build/libs/potato-4.0.8.jar` (eller nyere ved `.\gradlew jar`).
+- Ferdigbygd JAR: `build/libs/potato-4.1.0.jar` (eller nyere ved `.\gradlew jar`).
 
 ---
 
@@ -37,6 +37,10 @@
 | `/invclear <spiller>` | `/invclear Steve` | Tømmer inventaret deres |
 | `/mute <spiller>` | `/mute Steve` | Toggle mute – spilleren kan ikke skrive i chat |
 | `/spawnvillager <type>` | `/spawnvillager scammer` | Spawner en troll-landsbyboer (scammer, jester, tax, boomer, glitch) |
+| `/tardis setentrance` | Stå inni huset, rett mot der døra skal være | Setter TARDIS-inngang og plasserer egen jerndør (lite hus → stort rom) |
+| `/tardis setinterior` | Stå i det store rommet | Setter hvor spillere teleporteres når de går inn |
+| `/tardis setexit` | Stå på utgangsblokken inne | Setter hvor man står for å komme tilbake |
+| `/tardis info` | `/tardis info` | Viser inngang, interiør, utgang og dør |
 
 **Tilgang:** Alle kommandoer krever OP (eller tilsvarende permission). `/lagerkiste` og `/frys` er i praksis for **Admin_owner**.
 
@@ -64,12 +68,13 @@
 - **Nye kommandoer:** `/opmode`, `/troll <spiller>`, `/boost`, `/arena`, `/spectateplus <spiller>`.
 - **OP-fun (4.0.8):** `/inventory view <spiller>`, `/blind`, `/levitate`, `/anvil`, `/scare`, `/spin`, `/spam`, `/jail`, `/tnt`, `/invclear`, `/mute`.
 - **Troll-landsbyboere (4.0.8):** `/spawnvillager <type>` – Svindleren (magiske diamanter → kull/potet), Gjøgleren (splash-potion + løp), Skatteinnkreveren (tar 1 smaragd/min), Eksplosiv Selger (creeper-lyd ved handel), Glitchen (oppskrifter byttes hele tiden). Troll-varer: Magiske diamanter, Uknuselig hakke, Teleport-eple, Hemsko-støvler.
+- **TARDIS-hus (4.1.0):** `/tardis setentrance` plasserer en egen jerndør og setter inngangen – lite hus utvendig, stort rom innvendig. Kun når døra er åpen kan man gå inn og teleporteres til interiøret. `/tardis setinterior` og `setexit` for å fullføre oppsettet.
 
 ---
 
 ## Gamle ting vs. nye ting (for git / release)
 
-**Opprinnelige / gamle ting (før 4.0.8):**
+**Opprinnelige / gamle ting (før 4.1.0):**
 - `/lager`, `/lager give`, `/lager gear`, `/lager list`, `/lager instillinger`
 - `/lagerkiste` (Admin_owner), `/kiste` (OP-kiste med sider)
 - `/frys` (Admin_owner) + bytte-hender-tasten
@@ -79,13 +84,14 @@
 - Spesial: Flygestav (flygkølle), Matheo client (instillinger), Totem-stakk
 - Tordenøks på villager → belønning; Havets Vrede → lyn; Admin_owner frys
 
-**Nye ting (4.0.6–4.0.8):**
-- **Kommandoer:** `/opmode`, `/troll <spiller>`, `/boost`, `/arena`, `/spectateplus <spiller>`, `/inventory view`, `/blind`, `/levitate`, `/anvil`, `/scare`, `/spin`, `/spam`, `/jail`, `/tnt`, `/invclear`, `/mute`, `/spawnvillager`
+**Nye ting (4.0.6–4.1.0):**
+- **Kommandoer:** `/opmode`, `/troll <spiller>`, `/boost`, `/arena`, `/spectateplus <spiller>`, `/inventory view`, `/blind`, `/levitate`, `/anvil`, `/scare`, `/spin`, `/spam`, `/jail`, `/tnt`, `/invclear`, `/mute`, `/spawnvillager`, `/tardis`
 - **Våpen:** Dommens Sverd, Vakuumbue, Kaosstav, Gravitasjonsøks, Blodtrident, Tidsknuser
 - **Rustning:** Operator Kappe, Void Hjelm, Titan Brystplate, Magnetbukse, Froststøvler, Void Kongekrone
 - **Spesial:** Adminstav (GUI), Tidsklokke (rewind), Voidperle, Massehealer, Verdensbryter
 - **Admin/Troll:** Fake Ban-bok, Tordenværstav, Frysbombe, Inverterstav, Size Orb, Dommedagsknapp
 - **Troll-landsbyboere (4.0.8):** Svindleren, Gjøgleren, Skatteinnkreveren, Eksplosiv Selger, Glitchen. Troll-varer: Magiske diamanter, Uknuselig hakke, Teleport-eple, Hemsko-støvler
+- **TARDIS-hus (4.1.0):** Egen jerndør plasseres ved setentrance; lite utvendig, stort innvendig. Kun åpen dør = innpass.
 
 ---
 
@@ -125,8 +131,16 @@
 | `/invclear <spiller>` | Tøm spillers inventar | OP |
 | `/mute <spiller>` | Toggle mute i chat | OP |
 | `/spawnvillager <type>` | Spawn troll-landsbyboer (scammer, jester, tax, boomer, glitch) | OP |
+| `/tardis setentrance` | Setter inngang og plasserer egen TARDIS-dør (jerndør) | OP |
+| `/tardis setinterior` | Setter det store rommet (dit spillere teleporteres) | OP |
+| `/tardis setexit` | Setter utgangsblokken inne (stå her for å komme tilbake) | OP |
+| `/tardis info` | Viser inngang, interiør, utgang og dør | OP |
 
 Admin_owner kan også bruke **bytte-hender**-tasten (f.eks. R) for å slå frys på/av.
+
+### TARDIS-hus (`/tardis`)
+
+Lite hus utvendig, stort rom innvendig. **Egen jerndør** plasseres automatisk ved `/tardis setentrance` (stå inni huset og rett mot der døra skal være). Kun når døra er **åpen** kan spillere gå inn og teleporteres til interiøret. Sett interiør med `setinterior` og utgang med `setexit` (én blokk inne som sender tilbake til inngangen).
 
 ### Troll-landsbyboere (`/spawnvillager`)
 
@@ -225,7 +239,7 @@ Disse itemene kan gis med `/lager give <id>` og finnes i **OP-kisten** (`/kiste`
 .\gradlew jar
 ```
 
-Output: `build/libs/potato-4.0.8.jar` (versjon står i `build.gradle.kts`).
+Output: `build/libs/potato-4.1.0.jar` (versjon står i `build.gradle.kts`).
 
 ## Deploying to a server
 
@@ -235,11 +249,11 @@ Output: `build/libs/potato-4.0.8.jar` (versjon står i `build.gradle.kts`).
    ```
 2. Copy the JAR to the server’s `plugins/` folder. Use a **binary** transfer so the file isn’t corrupted:
    - **SCP (Linux/macOS or WSL):**  
-     `scp build/libs/potato-4.0.8.jar user@yourserver:~/minecraft/plugins/`
+     `scp build/libs/potato-4.1.0.jar user@yourserver:~/minecraft/plugins/`
    - **WinSCP / SFTP:** transfer in “binary” mode (default for .jar).
-   - **Other:** copy `build/libs/potato-4.0.8.jar` as-is; do not paste contents or use a text transfer.
+   - **Other:** copy `build/libs/potato-4.1.0.jar` as-is; do not paste contents or use a text transfer.
 
-If the server logs **`zip END header not found`** for the plugin, the JAR was corrupted during copy. Re-copy the file as binary and try again. Current build output: `potato-4.0.8.jar`.
+If the server logs **`zip END header not found`** for the plugin, the JAR was corrupted during copy. Re-copy the file as binary and try again. Current build output: `potato-4.1.0.jar`.
 
 ## Running the server locally
 

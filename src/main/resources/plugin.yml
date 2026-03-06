@@ -90,6 +90,10 @@ commands:
     description: Spawn en troll-landsbyboer (scammer, jester, tax, boomer, glitch). Kun OP.
     usage: /<command> <type>
     permission: lager.spawnvillager
+  tardis:
+    description: TARDIS-hus – lite utvendig, stort innvendig. setentrance | setinterior | setexit | setdoor | info
+    usage: /<command> <setentrance|setinterior|setexit|setdoor|info>
+    permission: lager.tardis
 
 permissions:
   lager.use:
@@ -130,4 +134,7 @@ permissions:
     default: op
   lager.spawnvillager:
     description: Tillater å spawne troll-landsbyboere.
+    default: op
+  lager.tardis:
+    description: Tillater TARDIS-hus (lite utvendig, stort innvendig).
     default: op
