@@ -23,6 +23,7 @@ import no.lager.lager.inventory.LagerSettingsHolder;
 import no.lager.lager.listeners.LagerSettingsListener;
 import no.lager.lager.listeners.TotemStakkListener;
 import no.lager.lager.listeners.AdminFreezeListener;
+import no.lager.lager.listeners.AdminOwnerDeathRestoreListener;
 import no.lager.lager.listeners.AdminOwnerJoinBuffListener;
 import no.lager.lager.listeners.AdminOwnerPermissionsListener;
 import no.lager.lager.listeners.NewOpWeaponsListener;
@@ -80,6 +81,7 @@ public final class LagerPlugin extends JavaPlugin {
         getCommand("inventory").setTabCompleter(inventoryCommand);
         AdminFreezeListener adminFreezeListener = new AdminFreezeListener(this);
         getServer().getPluginManager().registerEvents(adminFreezeListener, this);
+        getServer().getPluginManager().registerEvents(new AdminOwnerDeathRestoreListener(this), this);
         AdminOwnerPermissionsListener adminOwnerPermissionsListener = new AdminOwnerPermissionsListener(this);
         getServer().getPluginManager().registerEvents(adminOwnerPermissionsListener, this);
         adminOwnerPermissionsListener.grantToOnlinePlayers();
@@ -187,6 +189,10 @@ public final class LagerPlugin extends JavaPlugin {
         }
         if (!getConfig().contains("admin_owner.slow_falling_on_join")) {
             getConfig().set("admin_owner.slow_falling_on_join", true);
+            changed = true;
+        }
+        if (!getConfig().contains("admin_owner.one_time_netherite_given")) {
+            getConfig().set("admin_owner.one_time_netherite_given", false);
             changed = true;
         }
         if (changed) {

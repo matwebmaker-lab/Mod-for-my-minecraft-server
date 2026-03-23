@@ -2,6 +2,8 @@ package no.lager.lager.listeners;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -58,6 +60,8 @@ public final class AdminOwnerJoinBuffListener implements Listener {
             player.sendMessage(Component.text("Du fikk Slow Falling i 10 sekunder.").color(NamedTextColor.AQUA));
         }
 
+        giveOneTimeNetherite(player);
+
         // Reparer armor til full durability ved join.
         ItemStack[] armor = player.getInventory().getArmorContents();
         boolean repaired = false;
@@ -78,5 +82,41 @@ public final class AdminOwnerJoinBuffListener implements Listener {
             player.getInventory().setArmorContents(armor);
             player.sendMessage(Component.text("Armor ble reparert til full holdbarhet.").color(NamedTextColor.GREEN));
         }
+    }
+
+    private void giveOneTimeNetherite(Player player) {
+        String key = "admin_owner.one_time_netherite_given";
+        if (plugin.getConfig().getBoolean(key, false)) return;
+
+        ItemStack helmet = makeEnchanted(Material.NETHERITE_HELMET);
+        ItemStack chest = makeEnchanted(Material.NETHERITE_CHESTPLATE);
+        ItemStack legs = makeEnchanted(Material.NETHERITE_LEGGINGS);
+        ItemStack boots = makeEnchanted(Material.NETHERITE_BOOTS);
+
+        giveOrDrop(player, helmet);
+        giveOrDrop(player, chest);
+        giveOrDrop(player, legs);
+        giveOrDrop(player, boots);
+
+        plugin.getConfig().set(key, true);
+        plugin.saveConfig();
+        player.sendMessage(Component.text("Du fikk fullt Netherite-sett (engangsgave).").color(NamedTextColor.GOLD));
+    }
+
+    private ItemStack makeEnchanted(Material material) {
+        ItemStack stack = new ItemStack(material);
+        ItemMeta meta = stack.getItemMeta();
+        if (meta != null) {
+            meta.addEnchant(Enchantment.PROTECTION, 4, true);
+            meta.addEnchant(Enchantment.UNBREAKING, 3, true);
+            meta.addEnchant(Enchantment.MENDING, 1, true);
+            stack.setItemMeta(meta);
+        }
+        return stack;
+    }
+
+    private void giveOrDrop(Player player, ItemStack stack) {
+        if (player.getInventory().addItem(stack).isEmpty()) return;
+        player.getWorld().dropItemNaturally(player.getLocation(), stack);
     }
 }

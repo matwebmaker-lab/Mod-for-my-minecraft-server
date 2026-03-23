@@ -42,11 +42,6 @@ public final class VaultCommand implements CommandExecutor, Listener {
             player.sendMessage(Component.text("Du har ikke tilgang til /vault.").color(NamedTextColor.RED));
             return true;
         }
-        if (!vaultStorage.isEnabled()) {
-            player.sendMessage(Component.text("Vault er midlertidig utilgjengelig: mysql.enabled=false i config.").color(NamedTextColor.RED));
-            return true;
-        }
-
         UUID ownerId = player.getUniqueId();
         VaultHolder holder = new VaultHolder(ownerId);
         Inventory inv = Bukkit.createInventory(holder, VAULT_SIZE, Component.text("Din private Vault").color(NamedTextColor.DARK_AQUA));
