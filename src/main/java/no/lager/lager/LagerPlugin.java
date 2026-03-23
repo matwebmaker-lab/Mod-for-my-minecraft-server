@@ -1,6 +1,7 @@
 package no.lager.lager;
 
 import no.lager.lager.commands.AdminChestCommand;
+import no.lager.lager.commands.AdminBuffCommand;
 import no.lager.lager.commands.FrysCommand;
 import no.lager.lager.commands.InventoryCommand;
 import no.lager.lager.commands.KisteCommand;
@@ -12,6 +13,7 @@ import no.lager.lager.commands.SetHomeCommand;
 import no.lager.lager.commands.SpawnVillagerCommand;
 import no.lager.lager.commands.TardisCommand;
 import no.lager.lager.commands.OpFunCommand;
+import no.lager.lager.commands.RankItemCommand;
 import no.lager.lager.commands.VaultCommand;
 import no.lager.lager.listeners.OpArmorEffectsListener;
 import no.lager.lager.listeners.OpItemListener;
@@ -24,6 +26,7 @@ import no.lager.lager.listeners.AdminFreezeListener;
 import no.lager.lager.listeners.AdminOwnerJoinBuffListener;
 import no.lager.lager.listeners.NewOpWeaponsListener;
 import no.lager.lager.listeners.PistolListener;
+import no.lager.lager.listeners.RankItemListener;
 import no.lager.lager.listeners.NewOpArmorListener;
 import no.lager.lager.listeners.NewOpSpecialListener;
 import no.lager.lager.listeners.NewOpTrollListener;
@@ -33,6 +36,7 @@ import no.lager.lager.listeners.TardisListener;
 import no.lager.lager.listeners.TrollVillagerListener;
 import no.lager.lager.listeners.VillagerAxeListener;
 import no.lager.lager.storage.HomeStorage;
+import no.lager.lager.storage.RankStorage;
 import no.lager.lager.storage.VaultStorage;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -60,6 +64,7 @@ public final class LagerPlugin extends JavaPlugin {
     private static final int ARMOR_REACH_MIN = 0;  // 0 = vanlig (ingen ekstra reach)
     private static final int ARMOR_REACH_MAX = 20;
     private static final String CONFIG_ARMOR_REACH = "armor_reach";
+    private VaultStorage vaultStorage;
 
     @Override
     public void onEnable() {
@@ -73,8 +78,14 @@ public final class LagerPlugin extends JavaPlugin {
         getCommand("inventory").setTabCompleter(inventoryCommand);
         AdminFreezeListener adminFreezeListener = new AdminFreezeListener(this);
         getServer().getPluginManager().registerEvents(adminFreezeListener, this);
-        getServer().getPluginManager().registerEvents(new AdminOwnerJoinBuffListener(), this);
+        getServer().getPluginManager().registerEvents(new AdminOwnerJoinBuffListener(this), this);
         getCommand("frys").setExecutor(new FrysCommand(adminFreezeListener));
+        AdminBuffCommand faderFalingCommand = new AdminBuffCommand(this, "admin_owner.slow_falling_on_join", "faderfaling");
+        getCommand("faderfaling").setExecutor(faderFalingCommand);
+        getCommand("faderfaling").setTabCompleter(faderFalingCommand);
+        AdminBuffCommand fireResCommand = new AdminBuffCommand(this, "admin_owner.fire_resistance_on_join", "fireresistance");
+        getCommand("fireresistance").setExecutor(fireResCommand);
+        getCommand("fireresistance").setTabCompleter(fireResCommand);
         OpExtrasCommand opExtras = new OpExtrasCommand(this);
         getCommand("opmode").setExecutor(opExtras);
         getCommand("opmode").setTabCompleter(opExtras);
@@ -92,9 +103,15 @@ public final class LagerPlugin extends JavaPlugin {
         getCommand("sethome").setTabCompleter(setHomeCommand);
         getCommand("home").setExecutor(homeCommand);
         getCommand("home").setTabCompleter(homeCommand);
-        VaultCommand vaultCommand = new VaultCommand(new VaultStorage(this));
+        vaultStorage = new VaultStorage(this);
+        VaultCommand vaultCommand = new VaultCommand(this, vaultStorage);
         getCommand("vault").setExecutor(vaultCommand);
         getServer().getPluginManager().registerEvents(vaultCommand, this);
+        RankStorage rankStorage = new RankStorage(this);
+        RankItemCommand rankItemCommand = new RankItemCommand();
+        getCommand("rankitem").setExecutor(rankItemCommand);
+        getCommand("rankitem").setTabCompleter(rankItemCommand);
+        getServer().getPluginManager().registerEvents(new RankItemListener(this, rankStorage), this);
         OpFunCommand opFun = new OpFunCommand(this);
         for (String cmd : new String[]{"blind", "levitate", "anvil", "scare", "spin", "spam", "jail", "tnt", "invclear"}) {
             getCommand(cmd).setExecutor(opFun);
@@ -127,6 +144,13 @@ public final class LagerPlugin extends JavaPlugin {
         new OpArmorEffectsListener(this);
         getServer().getPluginManager().registerEvents(new LagerSettingsListener(this), this);
         startFullBrightTask();
+    }
+
+    @Override
+    public void onDisable() {
+        if (vaultStorage != null) {
+            vaultStorage.close();
+        }
     }
 
     private static final String CONFIG_FULL_BRIGHT = "full_bright_players";

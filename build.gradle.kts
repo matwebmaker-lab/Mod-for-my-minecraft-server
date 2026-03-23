@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "no.lager"
-version = "4.1.4"
+version = "4.1.5"
 
 val runDir = file("run")
 
@@ -18,6 +18,8 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
+    implementation("com.zaxxer:HikariCP:6.2.1")
+    runtimeOnly("com.mysql:mysql-connector-j")
 }
 
 java {

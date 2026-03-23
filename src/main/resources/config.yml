@@ -7,3 +7,17 @@ armor_reach: 10
 
 # Full bright (Night Vision) – liste over spillere (UUID) som har det på.
 full_bright_players: []
+
+# MySQL for /vault (nett-lagring)
+mysql:
+  enabled: false
+  host: "127.0.0.1"
+  port: 3306
+  database: "lager"
+  user: "lager_user"
+  password: "change_me"
+  ssl: false
+
+admin_owner:
+  fire_resistance_on_join: true
+  slow_falling_on_join: true

@@ -15,6 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -22,9 +24,11 @@ import java.util.UUID;
 public final class VaultCommand implements CommandExecutor, Listener {
 
     private static final int VAULT_SIZE = 54;
+    private final JavaPlugin plugin;
     private final VaultStorage vaultStorage;
 
-    public VaultCommand(VaultStorage vaultStorage) {
+    public VaultCommand(JavaPlugin plugin, VaultStorage vaultStorage) {
+        this.plugin = plugin;
         this.vaultStorage = vaultStorage;
     }
 
@@ -36,6 +40,10 @@ public final class VaultCommand implements CommandExecutor, Listener {
         }
         if (!player.hasPermission("lager.vault")) {
             player.sendMessage(Component.text("Du har ikke tilgang til /vault.").color(NamedTextColor.RED));
+            return true;
+        }
+        if (!vaultStorage.isEnabled()) {
+            player.sendMessage(Component.text("Vault er midlertidig utilgjengelig: mysql.enabled=false i config.").color(NamedTextColor.RED));
             return true;
         }
 
@@ -61,6 +69,12 @@ public final class VaultCommand implements CommandExecutor, Listener {
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onVaultClose(InventoryCloseEvent event) {
         if (!(event.getInventory().getHolder() instanceof VaultHolder holder)) return;
-        vaultStorage.saveVault(holder.getOwner(), event.getInventory().getContents());
+        ItemStack[] snapshot = event.getInventory().getContents().clone();
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
+            boolean ok = vaultStorage.saveVault(holder.getOwner(), snapshot);
+            if (!ok) {
+                plugin.getLogger().warning("[Vault] Save failed for " + holder.getOwner());
+            }
+        });
     }
 }

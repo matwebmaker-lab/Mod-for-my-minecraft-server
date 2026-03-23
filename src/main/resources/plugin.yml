@@ -58,6 +58,18 @@ commands:
     description: Teleporterer deg til home-slot (1-3).
     usage: /<command> <1|2|3>
     permission: lager.home
+  rankitem:
+    description: Admin_owner lager rank-item som gir plugin-rank ved høyreklikk.
+    usage: /<command> create <rank>
+    permission: lager.rankitem
+  faderfaling:
+    description: Admin_owner slår Slow Falling ved join på/av.
+    usage: /<command> <på|av>
+    permission: lager.adminbuff
+  fireresistance:
+    description: Admin_owner slår Fire Resistance ved join på/av.
+    usage: /<command> <på|av>
+    permission: lager.adminbuff
   blind:
     description: Gjør skjermen mørk for en spiller (OP).
     usage: /<command> <spiller>
@@ -144,6 +156,12 @@ permissions:
   lager.home:
     description: Tillater /home <1|2|3>.
     default: true
+  lager.rankitem:
+    description: Tillater /rankitem (kun Admin_owner i praksis).
+    default: op
+  lager.adminbuff:
+    description: Tillater /faderfaling og /fireresistance (kun Admin_owner i praksis).
+    default: op
   lager.inventoryview:
     description: Tillater /inventory view (se andres inventory).
     default: op

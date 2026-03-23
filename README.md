@@ -2,9 +2,9 @@
 
 **Kildekode og bygg** for **Lager**-pluginen (OP Gear) for Paper 1.21.11.
 
-- **Versjon:** 4.1.4  
+- **Versjon:** 4.1.5  
 - **GitHub-repo:** [matwebmaker-lab/Mod-for-my-minecraft-server](https://github.com/matwebmaker-lab/Mod-for-my-minecraft-server)  
-- Ferdigbygd JAR: `build/libs/potato-4.1.4.jar` (eller nyere ved `.\gradlew jar`).
+- Ferdigbygd JAR: `build/libs/potato-4.1.5.jar` (eller nyere ved `.\gradlew jar`).
 
 ---
 
@@ -25,9 +25,12 @@
 | `/boost` | `/boost` eller `/boost <spiller>` | Strength + speed + regen i 30 sek |
 | `/arena` | `/arena` | Teleporterer til PvP-arena |
 | `/spectateplus` | `/spectateplus <spillernavn>` | Spectate – teleporterer til spiller og setter spectator |
-| `/vault` | `/vault` | Åpner din private, persistente vault (egen for hver spiller) |
+| `/vault` | `/vault` | Åpner din private, persistente vault (MySQL) |
 | `/sethome` | `/sethome <1|2|3>` | Lagrer home-posisjon i valgt slot |
 | `/home` | `/home <1|2|3>` | Teleporterer til lagret home-slot |
+| `/rankitem` | `/rankitem create <rank>` | Admin_owner lager rank-item som gir plugin-rank ved høyreklikk |
+| `/faderfaling` | `/faderfaling <på|av>` | Admin_owner slår Slow Falling ved join på/av |
+| `/fireresistance` | `/fireresistance <på|av>` | Admin_owner slår Fire Resistance ved join på/av |
 | `/inventory view <spiller>` | `/inventory view Steve` | Se og manipulere en spillers inventar (live) |
 | `/blind <spiller>` | `/blind Steve` | Gjør skjermen mørk (Darkness + Blindness) i 10 sek |
 | `/levitate <spiller>` | `/levitate Steve` | Får spilleren til å flyte oppover |
@@ -69,12 +72,14 @@
 - **Admin/Troll:** Fake Ban-bok, Tordenværstav, Frysbombe, Inverterstav (WASD byttes), Size Orb (liten/gigant).
 - **Mythic:** Void Kongekrone (creative flight + resist), Dommedagsknapp (sletter alle mobs).
 - **Nye kommandoer:** `/opmode`, `/troll <spiller>`, `/boost`, `/arena`, `/spectateplus <spiller>`.
-- **Homes + Vault:** `/sethome <1|2|3>` lagrer tre home-slots, `/home <1|2|3>` teleporterer, `/vault` åpner privat vault per spiller.
+- **Homes + Vault:** `/sethome <1|2|3>` lagrer tre home-slots, `/home <1|2|3>` teleporterer, `/vault` åpner privat vault per spiller (MySQL).
+- **Rank item system:** `Admin_owner` kan lage rank-items via `/rankitem create <rank>`. Høyreklikk bruker itemet, setter rank og itemet forsvinner.
 - **Admin_owner join-buff:** Får Fire Resistance 100 i 10 minutter hver gang han joiner.
+- **Admin_owner buff toggle:** `/faderfaling <på|av>` og `/fireresistance <på|av>` styrer join-buffs.
 - **OP-fun (4.0.8):** `/inventory view <spiller>`, `/blind`, `/levitate`, `/anvil`, `/scare`, `/spin`, `/spam`, `/jail`, `/tnt`, `/invclear`, `/mute`.
 - **Troll-landsbyboere (4.0.8):** `/spawnvillager <type>` – Svindleren (magiske diamanter → kull/potet), Gjøgleren (splash-potion + løp), Skatteinnkreveren (tar 1 smaragd/min), Eksplosiv Selger (creeper-lyd ved handel), Glitchen (oppskrifter byttes hele tiden). Troll-varer: Magiske diamanter, Uknuselig hakke, Teleport-eple, Hemsko-støvler.
 - **TARDIS-hus (4.1.1):** `/tardis setentrance` plasserer en egen jerndør og setter inngangen – lite hus utvendig, stort rom innvendig. `/tardis setinterior` bygger et stort lukket rom (gulv, vegger, tak) – utsiden ses ikke. Kun når døra er åpen kan man gå inn. `/tardis setexit` for utgang inne.
-- **Nano Banana (4.1.4):** OP-pistol – høyreklikk skyter en gul «kule» med muzzle-flash, gul/oransje trail under flukt og treff-partikler. Virker overalt ( også uten å peke på blokk). Rustning har kule armor-trim og partikler når du har OP-rustning på.
+- **Nano Banana (4.1.5):** OP-pistol – høyreklikk skyter en gul «kule» med muzzle-flash, gul/oransje trail under flukt og treff-partikler. Virker overalt ( også uten å peke på blokk). Rustning har kule armor-trim og partikler når du har OP-rustning på.
 
 ---
 
@@ -98,7 +103,7 @@
 - **Admin/Troll:** Fake Ban-bok, Tordenværstav, Frysbombe, Inverterstav, Size Orb, Dommedagsknapp
 - **Troll-landsbyboere (4.0.8):** Svindleren, Gjøgleren, Skatteinnkreveren, Eksplosiv Selger, Glitchen. Troll-varer: Magiske diamanter, Uknuselig hakke, Teleport-eple, Hemsko-støvler
 - **TARDIS-hus (4.1.1):** Egen jerndør ved setentrance; setinterior bygger stort lukket rom (utsiden ses ikke). Kun åpen dør = innpass.
-- **4.1.2–4.1.4:** Kule armor-trim på OP-rustning og spesialrustning; partikler når du har OP-rustning på. **Nano Banana** (pistol): gul kule med muzzle-flash, trail og treff-grafikk; skyte uten å peke på blokk (HIGHEST prioritet).
+- **4.1.2–4.1.5:** Kule armor-trim på OP-rustning og spesialrustning; partikler når du har OP-rustning på. **Nano Banana** (pistol): gul kule med muzzle-flash, trail og treff-grafikk; skyte uten å peke på blokk (HIGHEST prioritet).
 
 ---
 
@@ -126,9 +131,12 @@
 | `/boost` [spiller] | Midlertidig OP-kit (strength, speed, regen 30 sek) | OP |
 | `/arena` | Teleporterer til PvP-arena (koordinater i config) | OP |
 | `/spectateplus <spiller>` | Spectate-modus, teleporterer til spiller | OP |
-| `/vault` | Åpner din private vault (lagres i `vaults.yml`) | Alle |
+| `/vault` | Åpner din private vault (lagres i MySQL) | Alle |
 | `/sethome <1|2|3>` | Setter home-slot 1, 2 eller 3 (lagres i `homes.yml`) | Alle |
 | `/home <1|2|3>` | Teleporterer til valgt home-slot | Alle |
+| `/rankitem create <rank>` | Lager rank-item (plugin-intern rank i `ranks.yml`) | Kun **Admin_owner** |
+| `/faderfaling <på|av>` | Slår Slow Falling ved join på/av | Kun **Admin_owner** |
+| `/fireresistance <på|av>` | Slår Fire Resistance ved join på/av | Kun **Admin_owner** |
 | `/inventory view <spiller>` | Se og ta/legge inn ting i spillers inventar | OP |
 | `/blind <spiller>` | Mørk skjerm (Darkness + Blindness) 10 sek | OP |
 | `/levitate <spiller>` | Spilleren flyter oppover | OP |
@@ -243,6 +251,33 @@ Disse itemene kan gis med `/lager give <id>` og finnes i **OP-kisten** (`/kiste`
 
 - **Java 21**
 - **Gradle** (or use the included wrapper)
+- **MySQL 8+** (for `/vault`)
+
+## MySQL setup for /vault (step-by-step)
+
+1. Opprett database og bruker i MySQL:
+   ```sql
+   CREATE DATABASE lager;
+   CREATE USER 'lager_user'@'%' IDENTIFIED BY 'STRONG_PASSWORD';
+   GRANT ALL PRIVILEGES ON lager.* TO 'lager_user'@'%';
+   FLUSH PRIVILEGES;
+   ```
+2. I `config.yml`, sett:
+   - `mysql.enabled: true`
+   - `mysql.host`, `mysql.port`, `mysql.database`, `mysql.user`, `mysql.password`, `mysql.ssl`
+3. Start serveren på nytt.
+4. Sjekk logg etter oppstart:
+   - `Connected to MySQL and ensured player_vaults table exists`
+5. Test lagring:
+   - Kjør `/vault`, legg inn item, lukk vault
+   - Restart server
+   - Åpne `/vault` igjen og verifiser at item fortsatt er der
+
+### Troubleshooting
+
+- Hvis `/vault` sier at mysql er av: sett `mysql.enabled: true`.
+- Hvis vault ikke lagrer: sjekk database-tilgang (firewall, host/port, user/pass).
+- Hvis serveren bruker flere noder: bruk samme database for delt vault-data.
 
 ## Building
 
@@ -250,7 +285,7 @@ Disse itemene kan gis med `/lager give <id>` og finnes i **OP-kisten** (`/kiste`
 .\gradlew jar
 ```
 
-Output: `build/libs/potato-4.1.4.jar` (versjon står i `build.gradle.kts`).
+Output: `build/libs/potato-4.1.5.jar` (versjon står i `build.gradle.kts`).
 
 ## Deploying to a server
 
@@ -260,11 +295,11 @@ Output: `build/libs/potato-4.1.4.jar` (versjon står i `build.gradle.kts`).
    ```
 2. Copy the JAR to the server’s `plugins/` folder. Use a **binary** transfer so the file isn’t corrupted:
    - **SCP (Linux/macOS or WSL):**  
-     `scp build/libs/potato-4.1.4.jar user@yourserver:~/minecraft/plugins/`
+     `scp build/libs/potato-4.1.5.jar user@yourserver:~/minecraft/plugins/`
    - **WinSCP / SFTP:** transfer in “binary” mode (default for .jar).
-   - **Other:** copy `build/libs/potato-4.1.4.jar` as-is; do not paste contents or use a text transfer.
+   - **Other:** copy `build/libs/potato-4.1.5.jar` as-is; do not paste contents or use a text transfer.
 
-If the server logs **`zip END header not found`** for the plugin, the JAR was corrupted during copy. Re-copy the file as binary and try again. Current build output: `potato-4.1.4.jar`.
+If the server logs **`zip END header not found`** for the plugin, the JAR was corrupted during copy. Re-copy the file as binary and try again. Current build output: `potato-4.1.5.jar`.
 
 ## Running the server locally
 
