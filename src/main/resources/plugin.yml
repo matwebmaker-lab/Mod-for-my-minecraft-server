@@ -46,6 +46,18 @@ commands:
     description: Spectate uten at spiller vet.
     usage: /<command> <spiller>
     permission: lager.spectateplus
+  vault:
+    description: Åpner din private vault.
+    usage: /<command>
+    permission: lager.vault
+  sethome:
+    description: Setter home-slot (1-3) for deg.
+    usage: /<command> <1|2|3>
+    permission: lager.sethome
+  home:
+    description: Teleporterer deg til home-slot (1-3).
+    usage: /<command> <1|2|3>
+    permission: lager.home
   blind:
     description: Gjør skjermen mørk for en spiller (OP).
     usage: /<command> <spiller>
@@ -123,6 +135,15 @@ permissions:
   lager.spectateplus:
     description: Tillater /spectateplus.
     default: op
+  lager.vault:
+    description: Tillater /vault (privat vault).
+    default: true
+  lager.sethome:
+    description: Tillater /sethome <1|2|3>.
+    default: true
+  lager.home:
+    description: Tillater /home <1|2|3>.
+    default: true
   lager.inventoryview:
     description: Tillater /inventory view (se andres inventory).
     default: op

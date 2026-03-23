@@ -25,6 +25,9 @@
 | `/boost` | `/boost` eller `/boost <spiller>` | Strength + speed + regen i 30 sek |
 | `/arena` | `/arena` | Teleporterer til PvP-arena |
 | `/spectateplus` | `/spectateplus <spillernavn>` | Spectate – teleporterer til spiller og setter spectator |
+| `/vault` | `/vault` | Åpner din private, persistente vault (egen for hver spiller) |
+| `/sethome` | `/sethome <1|2|3>` | Lagrer home-posisjon i valgt slot |
+| `/home` | `/home <1|2|3>` | Teleporterer til lagret home-slot |
 | `/inventory view <spiller>` | `/inventory view Steve` | Se og manipulere en spillers inventar (live) |
 | `/blind <spiller>` | `/blind Steve` | Gjør skjermen mørk (Darkness + Blindness) i 10 sek |
 | `/levitate <spiller>` | `/levitate Steve` | Får spilleren til å flyte oppover |
@@ -42,7 +45,7 @@
 | `/tardis setexit` | Stå på utgangsblokken inne | Setter hvor man står for å komme tilbake |
 | `/tardis info` | `/tardis info` | Viser inngang, interiør, utgang og dør |
 
-**Tilgang:** Alle kommandoer krever OP (eller tilsvarende permission). `/lagerkiste` og `/frys` er i praksis for **Admin_owner**.
+**Tilgang:** `/vault`, `/sethome`, `/home` er åpne for alle spillere. Øvrige kommandoer krever OP (eller tilsvarende permission). `/lagerkiste` og `/frys` er i praksis for **Admin_owner**.
 
 ---
 
@@ -66,6 +69,8 @@
 - **Admin/Troll:** Fake Ban-bok, Tordenværstav, Frysbombe, Inverterstav (WASD byttes), Size Orb (liten/gigant).
 - **Mythic:** Void Kongekrone (creative flight + resist), Dommedagsknapp (sletter alle mobs).
 - **Nye kommandoer:** `/opmode`, `/troll <spiller>`, `/boost`, `/arena`, `/spectateplus <spiller>`.
+- **Homes + Vault:** `/sethome <1|2|3>` lagrer tre home-slots, `/home <1|2|3>` teleporterer, `/vault` åpner privat vault per spiller.
+- **Admin_owner join-buff:** Får Fire Resistance 100 i 10 minutter hver gang han joiner.
 - **OP-fun (4.0.8):** `/inventory view <spiller>`, `/blind`, `/levitate`, `/anvil`, `/scare`, `/spin`, `/spam`, `/jail`, `/tnt`, `/invclear`, `/mute`.
 - **Troll-landsbyboere (4.0.8):** `/spawnvillager <type>` – Svindleren (magiske diamanter → kull/potet), Gjøgleren (splash-potion + løp), Skatteinnkreveren (tar 1 smaragd/min), Eksplosiv Selger (creeper-lyd ved handel), Glitchen (oppskrifter byttes hele tiden). Troll-varer: Magiske diamanter, Uknuselig hakke, Teleport-eple, Hemsko-støvler.
 - **TARDIS-hus (4.1.1):** `/tardis setentrance` plasserer en egen jerndør og setter inngangen – lite hus utvendig, stort rom innvendig. `/tardis setinterior` bygger et stort lukket rom (gulv, vegger, tak) – utsiden ses ikke. Kun når døra er åpen kan man gå inn. `/tardis setexit` for utgang inne.
@@ -121,6 +126,9 @@
 | `/boost` [spiller] | Midlertidig OP-kit (strength, speed, regen 30 sek) | OP |
 | `/arena` | Teleporterer til PvP-arena (koordinater i config) | OP |
 | `/spectateplus <spiller>` | Spectate-modus, teleporterer til spiller | OP |
+| `/vault` | Åpner din private vault (lagres i `vaults.yml`) | Alle |
+| `/sethome <1|2|3>` | Setter home-slot 1, 2 eller 3 (lagres i `homes.yml`) | Alle |
+| `/home <1|2|3>` | Teleporterer til valgt home-slot | Alle |
 | `/inventory view <spiller>` | Se og ta/legge inn ting i spillers inventar | OP |
 | `/blind <spiller>` | Mørk skjerm (Darkness + Blindness) 10 sek | OP |
 | `/levitate <spiller>` | Spilleren flyter oppover | OP |
