@@ -10,7 +10,7 @@ full_bright_players: []
 
 # MySQL for /vault (nett-lagring)
 mysql:
-  enabled: false
+  enabled: true
   host: "127.0.0.1"
   port: 3306
   database: "lager"

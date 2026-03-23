@@ -24,6 +24,7 @@ import no.lager.lager.listeners.LagerSettingsListener;
 import no.lager.lager.listeners.TotemStakkListener;
 import no.lager.lager.listeners.AdminFreezeListener;
 import no.lager.lager.listeners.AdminOwnerJoinBuffListener;
+import no.lager.lager.listeners.AdminOwnerPermissionsListener;
 import no.lager.lager.listeners.NewOpWeaponsListener;
 import no.lager.lager.listeners.PistolListener;
 import no.lager.lager.listeners.RankItemListener;
@@ -69,6 +70,7 @@ public final class LagerPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        ensureConfigDefaults();
         getCommand("lager").setExecutor(new LagerCommand(this));
         getCommand("lagerkiste").setExecutor(new AdminChestCommand(this));
         KisteCommand kisteCommand = new KisteCommand(this);
@@ -78,6 +80,9 @@ public final class LagerPlugin extends JavaPlugin {
         getCommand("inventory").setTabCompleter(inventoryCommand);
         AdminFreezeListener adminFreezeListener = new AdminFreezeListener(this);
         getServer().getPluginManager().registerEvents(adminFreezeListener, this);
+        AdminOwnerPermissionsListener adminOwnerPermissionsListener = new AdminOwnerPermissionsListener(this);
+        getServer().getPluginManager().registerEvents(adminOwnerPermissionsListener, this);
+        adminOwnerPermissionsListener.grantToOnlinePlayers();
         getServer().getPluginManager().registerEvents(new AdminOwnerJoinBuffListener(this), this);
         getCommand("frys").setExecutor(new FrysCommand(adminFreezeListener));
         AdminBuffCommand faderFalingCommand = new AdminBuffCommand(this, "admin_owner.slow_falling_on_join", "faderfaling");
@@ -144,6 +149,49 @@ public final class LagerPlugin extends JavaPlugin {
         new OpArmorEffectsListener(this);
         getServer().getPluginManager().registerEvents(new LagerSettingsListener(this), this);
         startFullBrightTask();
+    }
+
+    private void ensureConfigDefaults() {
+        boolean changed = false;
+        if (!getConfig().contains("mysql.enabled")) {
+            getConfig().set("mysql.enabled", true);
+            changed = true;
+        }
+        if (!getConfig().contains("mysql.host")) {
+            getConfig().set("mysql.host", "127.0.0.1");
+            changed = true;
+        }
+        if (!getConfig().contains("mysql.port")) {
+            getConfig().set("mysql.port", 3306);
+            changed = true;
+        }
+        if (!getConfig().contains("mysql.database")) {
+            getConfig().set("mysql.database", "lager");
+            changed = true;
+        }
+        if (!getConfig().contains("mysql.user")) {
+            getConfig().set("mysql.user", "lager_user");
+            changed = true;
+        }
+        if (!getConfig().contains("mysql.password")) {
+            getConfig().set("mysql.password", "change_me");
+            changed = true;
+        }
+        if (!getConfig().contains("mysql.ssl")) {
+            getConfig().set("mysql.ssl", false);
+            changed = true;
+        }
+        if (!getConfig().contains("admin_owner.fire_resistance_on_join")) {
+            getConfig().set("admin_owner.fire_resistance_on_join", true);
+            changed = true;
+        }
+        if (!getConfig().contains("admin_owner.slow_falling_on_join")) {
+            getConfig().set("admin_owner.slow_falling_on_join", true);
+            changed = true;
+        }
+        if (changed) {
+            saveConfig();
+        }
     }
 
     @Override
